@@ -11,12 +11,12 @@ module.exports = {
   category: "MUSIC",
   validations: musicValidations,
   command: {
-    enabled: true,
+    enabled: false,
     minArgsCount: 1,
     usage: "<queue|track>",
   },
   slashCommand: {
-    enabled: true,
+    enabled: false,
     options: [
       {
         name: "type",
@@ -61,6 +61,7 @@ function toggleLoop({ client, guildId }, type) {
   // track
   if (type === "track") {
     player.queue.setLoop(LoopType.Song);
+    const test = Loop.type;
     return "Loop mode is set to `track`";
   }
 

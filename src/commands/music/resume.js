@@ -9,10 +9,10 @@ module.exports = {
   category: "MUSIC",
   validations: musicValidations,
   command: {
-    enabled: true,
+    enabled: false,
   },
   slashCommand: {
-    enabled: true,
+    enabled: false,
   },
 
   async messageRun(message, args) {
@@ -34,4 +34,6 @@ function resumePlayer({ client, guildId }) {
   if (!player.paused) return "The player is already resumed";
   player.resume();
   return "▶️ Resumed the music player";
+
+  
 }

@@ -1,10 +1,12 @@
 const { EmbedBuilder } = require("discord.js");
-const { EMBED_COLORS } = require("@root/config");
 
 /**
  * @param {import('discord.js').User} user
  */
-module.exports = (user) => {
+module.exports = (interaction) => {
+
+  let user = interaction.options.getUser("name") || interaction.user;
+
   const x64 = user.displayAvatarURL({ extension: "png", size: 64 });
   const x128 = user.displayAvatarURL({ extension: "png", size: 128 });
   const x256 = user.displayAvatarURL({ extension: "png", size: 256 });
@@ -14,7 +16,7 @@ module.exports = (user) => {
 
   const embed = new EmbedBuilder()
     .setTitle(`Avatar of ${user.username}`)
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(interaction.client.config.EMBED_COLORS.BOT_EMBED)
     .setImage(x256)
     .setDescription(
       `Links: • [x64](${x64}) ` +

@@ -1,5 +1,4 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
-const { EMBED_COLORS, SUPPORT_SERVER, DASHBOARD } = require("@root/config");
 const { timeformat } = require("@helpers/Utils");
 const os = require("os");
 const { stripIndent } = require("common-tags");
@@ -7,7 +6,9 @@ const { stripIndent } = require("common-tags");
 /**
  * @param {import('@structures/BotClient')} client
  */
-module.exports = (client) => {
+module.exports = (interaction) => {
+  const { client } = interaction;
+
   // STATS
   const guilds = client.guilds.cache.size;
   const channels = client.channels.cache.size;
@@ -37,7 +38,7 @@ module.exports = (client) => {
 
   const embed = new EmbedBuilder()
     .setTitle("Bot Information")
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(interaction.client.config.EMBED_COLORS.BOT_EMBED)
     .setThumbnail(client.user.displayAvatarURL())
     .setDescription(desc)
     .addFields(
@@ -84,13 +85,13 @@ module.exports = (client) => {
   let components = [];
   components.push(new ButtonBuilder().setLabel("Invite Link").setURL(client.getInvite()).setStyle(ButtonStyle.Link));
 
-  if (SUPPORT_SERVER) {
-    components.push(new ButtonBuilder().setLabel("Support Server").setURL(SUPPORT_SERVER).setStyle(ButtonStyle.Link));
+  if (interaction.client.config.SUPPORT_SERVER) {
+    components.push(new ButtonBuilder().setLabel("Support Server").setURL(interaction.client.config.SUPPORT_SERVER).setStyle(ButtonStyle.Link));
   }
 
-  if (DASHBOARD.enabled) {
+  if (interaction.client.config.DASHBOARD.enabled) {
     components.push(
-      new ButtonBuilder().setLabel("Dashboard Link").setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link)
+      new ButtonBuilder().setLabel("Dashboard Link").setURL(interaction.client.config.DASHBOARD.baseURL).setStyle(ButtonStyle.Link)
     );
   }
 

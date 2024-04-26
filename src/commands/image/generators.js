@@ -1,7 +1,6 @@
 const { EmbedBuilder, AttachmentBuilder, ApplicationCommandOptionType } = require("discord.js");
 const { getBuffer } = require("@helpers/HttpUtils");
 const { getImageFromMessage } = require("@helpers/BotUtils");
-const { EMBED_COLORS, IMAGE } = require("@root/config.js");
 
 const availableGenerators = [
   "ad",
@@ -84,7 +83,7 @@ module.exports = {
 
     const attachment = new AttachmentBuilder(response.buffer, { name: "attachment.png" });
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.TRANSPARENT)
+      .setColor(client.config.EMBED_COLORS.TRANSPARENT)
       .setImage("attachment://attachment.png")
       .setFooter({ text: `Requested by: ${message.author.username}` });
 
@@ -96,13 +95,14 @@ module.exports = {
     const user = interaction.options.getUser("user");
     const imageLink = interaction.options.getString("link");
     const generator = interaction.options.getString("name");
+    const client = interaction.client;
 
     let image;
     if (user) image = user.displayAvatarURL({ size: 256, extension: "png" });
     if (!image && imageLink) image = imageLink;
     if (!image) image = author.displayAvatarURL({ size: 256, extension: "png" });
 
-    const url = getGenerator(generator, image);
+    const url = getGenerator(generator, image, interaction);
     const response = await getBuffer(url, {
       headers: {
         Authorization: `Bearer ${process.env.STRANGE_API_KEY}`,
@@ -113,7 +113,7 @@ module.exports = {
 
     const attachment = new AttachmentBuilder(response.buffer, { name: "attachment.png" });
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.TRANSPARENT)
+      .setColor(client.config.EMBED_COLORS.TRANSPARENT)
       .setImage("attachment://attachment.png")
       .setFooter({ text: `Requested by: ${author.username}` });
 
@@ -121,8 +121,8 @@ module.exports = {
   },
 };
 
-function getGenerator(genName, image) {
-  const endpoint = new URL(`${IMAGE.BASE_API}/generators/${genName}`);
+function getGenerator(genName, image, {client}) {
+  const endpoint = new URL(`${client.config.IMAGE.BASE_API}/generators/${genName}`);
   endpoint.searchParams.append("image", image);
   return endpoint.href;
 }

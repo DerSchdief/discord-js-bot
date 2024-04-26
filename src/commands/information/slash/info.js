@@ -19,6 +19,7 @@ module.exports = {
   },
   slashCommand: {
     enabled: true,
+    ephemeral: true,
     options: [
       {
         name: "user",
@@ -92,37 +93,32 @@ module.exports = {
 
     // user
     if (sub === "user") {
-      let targetUser = interaction.options.getUser("name") || interaction.user;
-      let target = await interaction.guild.members.fetch(targetUser);
-      response = user(target);
+      response = await user(interaction);
     }
 
     // channel
     else if (sub === "channel") {
-      let targetChannel = interaction.options.getChannel("name") || interaction.channel;
-      response = channelInfo(targetChannel);
+      response = channelInfo(interaction);
     }
 
     // guild
     else if (sub === "guild") {
-      response = await guildInfo(interaction.guild);
+      response = await guildInfo(interaction);
     }
 
     // bot
     else if (sub === "bot") {
-      response = botInfo(interaction.client);
+      response = botInfo(interaction);
     }
 
     // avatar
     else if (sub === "avatar") {
-      let target = interaction.options.getUser("name") || interaction.user;
-      response = avatar(target);
+      response = avatar(interaction);
     }
 
     // emoji
     else if (sub === "emoji") {
-      let emoji = interaction.options.getString("name");
-      response = emojiInfo(emoji);
+      response = emojiInfo(interaction);
     }
 
     // return

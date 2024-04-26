@@ -1,6 +1,5 @@
 const { EmbedBuilder } = require("discord.js");
 const { getUser } = require("@schemas/User");
-const { EMBED_COLORS, ECONOMY } = require("@root/config.js");
 const { diffHours, getRemainingTime } = require("@helpers/Utils");
 
 /**
@@ -24,13 +23,13 @@ module.exports = {
   },
 
   async interactionRun(interaction) {
-    const response = await daily(interaction.user);
+    const response = await daily(interaction);
     await interaction.followUp(response);
   },
 };
 
-async function daily(user) {
-  const userDb = await getUser(user);
+async function daily(interaction) {
+  const userDb = await getUser(interaction.user);
   let streak = 0;
 
   if (userDb.daily.timestamp) {
@@ -46,16 +45,16 @@ async function daily(user) {
   }
 
   userDb.daily.streak = streak;
-  userDb.coins += ECONOMY.DAILY_COINS;
+  userDb.coins += client.config.ECONOMY.DAILY_COINS;
   userDb.daily.timestamp = new Date();
   await userDb.save();
 
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
-    .setAuthor({ name: user.username, iconURL: user.displayAvatarURL() })
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
+    .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
     .setDescription(
-      `You got ${ECONOMY.DAILY_COINS}${ECONOMY.CURRENCY} as your daily reward\n` +
-        `**Updated Balance:** ${userDb.coins}${ECONOMY.CURRENCY}`
+      `You got ${client.config.ECONOMY.DAILY_COINS}${client.config.ECONOMY.CURRENCY} as your daily reward\n` +
+        `**Updated Balance:** ${userDb.coins}${client.config.ECONOMY.CURRENCY}`
     );
 
   return { embeds: [embed] };

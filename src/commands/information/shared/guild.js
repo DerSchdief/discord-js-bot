@@ -1,11 +1,13 @@
 const { EmbedBuilder, ChannelType, GuildVerificationLevel } = require("discord.js");
-const { EMBED_COLORS } = require("@root/config");
 const moment = require("moment");
 
 /**
  * @param {import('discord.js').Guild} guild
+ * @param {import('discord.js').ChatInputCommandInteraction} interaction
  */
-module.exports = async (guild) => {
+module.exports = async (interaction) => {
+  const { guild } = interaction;
+
   const { name, id, preferredLocale, channels, roles, ownerId } = guild;
 
   const owner = await guild.members.fetch(ownerId);
@@ -58,14 +60,14 @@ module.exports = async (guild) => {
   let desc = "";
   desc = `${desc + "❯"} **Id:** ${id}\n`;
   desc = `${desc + "❯"} **Name:** ${name}\n`;
-  desc = `${desc + "❯"} **Owner:** ${owner.user.username}\n`;
+  desc = `${desc + "❯"} **Owner:** ${owner.user.tag}\n`;
   desc = `${desc + "❯"} **Region:** ${preferredLocale}\n`;
   desc += "\n";
 
   const embed = new EmbedBuilder()
     .setTitle("GUILD INFORMATION")
     .setThumbnail(guild.iconURL())
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(interaction.client.config.EMBED_COLORS.BOT_EMBED)
     .setDescription(desc)
     .addFields(
       {

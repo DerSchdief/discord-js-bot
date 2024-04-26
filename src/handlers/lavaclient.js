@@ -1,83 +1,169 @@
 const { EmbedBuilder } = require("discord.js");
-const { Cluster } = require("lavaclient");
+const { LavalinkManager } = require("lavalink-client");
 const prettyMs = require("pretty-ms");
-const { load, SpotifyItemType } = require("@lavaclient/spotify");
-require("@lavaclient/queue/register");
 
 /**
  * @param {import("@structures/BotClient")} client
  */
 module.exports = (client) => {
-  load({
-    client: {
-      id: process.env.SPOTIFY_CLIENT_ID,
-      secret: process.env.SPOTIFY_CLIENT_SECRET,
-    },
-    autoResolveYoutubeTracks: false,
-    loaders: [SpotifyItemType.Album, SpotifyItemType.Artist, SpotifyItemType.Playlist, SpotifyItemType.Track],
-  });
 
-  const lavaclient = new Cluster({
+  const lavaclient = new LavalinkManager({
     nodes: client.config.MUSIC.LAVALINK_NODES,
-    sendGatewayPayload: (id, payload) => client.guilds.cache.get(id)?.shard?.send(payload),
+    // [
+    //     // { // Important to have at least 1 node
+    //       //     authorization: "youshallnotpass",
+    //       //     host: "lavalink",
+    //       //     port: 2333,
+    //       //     id: "HomeLab LavaLink"
+    //       // }
+    //       { // Important to have at least 1 node
+    //         authorization: "https://dsc.gg/ajidevserver",
+    //         host: "lava-v4.ajieblogs.eu.org",
+    //         port: 80,
+    //         id: "Lavalink Extern"
+    //       }
+    //   ],
+    sendToShard: (guildId, payload) =>
+        client.guilds.cache.get(guildId)?.shard?.send(payload),
+    client: {
+        id: client.config.BOT_SETTINGS.BOT_ID,
+        username: client.config.BOT_SETTINGS.BOT_Name,
+    },
+    // everything down below is optional
+    autoSkip: true,
+    playerOptions: {
+        clientBasedPositionUpdateInterval: 150,
+        defaultSearchPlatform: "ytmsearch",
+        // defaultSearchPlatform: "spotify",
+        volumeDecrementer: 0.75,
+        //requesterTransformer: requesterTransformer,
+        onDisconnect: {
+            autoReconnect: true, 
+            destroyPlayer: false 
+        },
+        onEmptyQueue: {
+            destroyAfterMs: 30_000, 
+            //autoPlayFunction: autoPlayFunction,
+        }
+    },
+    queueOptions: {
+        maxPreviousTracks: 25
+    },
+    // advancedOptions: {
+    //     debugOptions: {
+    //         noAudio: true
+    //     }
+    // },
   });
 
-  client.ws.on("VOICE_SERVER_UPDATE", (data) => lavaclient.handleVoiceUpdate(data));
-  client.ws.on("VOICE_STATE_UPDATE", (data) => lavaclient.handleVoiceUpdate(data));
+  // client.logger.success("Test1234");
+  // console.log(lavaclient);
+  // console.log("Test1234");
 
-  lavaclient.on("nodeConnect", (node, event) => {
-    client.logger.log(`Node "${node.id}" connected`);
-  });
+    // lavaclient.nodeManager.on("disconnect", (node, reason) => {
+    //     console.log(node.id, " :: DISCONNECT :: ", reason);
+    // }).on("connect", (node) => {
+    //     console.log(node.id, " :: CONNECTED :: ");
+    //     // testPlay(client); // TEST THE MUSIC ONCE CONNECTED TO THE BOT
+    // }).on("reconnecting", (node) => {
+    //     console.log(node.id, " :: RECONNECTING :: ");
+    // }).on("create", (node) => {
+    //     console.log(node.id, " :: CREATED :: ");
+    // }).on("destroy", (node) => {
+    //     console.log(node.id, " :: DESTROYED :: ");
+    // }).on("error", (node, error, payload) => {
+    //     console.log(node.id, " :: ERRORED :: ", error, " :: PAYLOAD :: ", payload);
+    // }).on("resumed", (node, payload, players) => {{
+    //     console.log(node.id, " :: RESUMED :: ", players.length, " PLAYERS STILL PLAYING :: PAYLOAD ::", payload);
+    //     console.log(players);
+    // }});
 
-  lavaclient.on("nodeDisconnect", (node, event) => {
-    client.logger.log(`Node "${node.id}" disconnected`);
-  });
+    // const test = require("@src/buttons/musik/queue");
+    // lavaclient.on("playerCreate", (player) => {
+    //   console.log(player.guildId, " :: Created a Player :: ");
+    //   test.run(client);
+    // });
 
-  lavaclient.on("nodeError", (node, error) => {
-    client.logger.error(`Node "${node.id}" encountered an error: ${error.message}.`, error);
-  });
+    // client.lavalink.on("playerCreate", (player) => {
+    //     console.log(player.guildId, " :: Created a Player :: ");
+    // }).on("playerDestroy", (player, reason) => {
+    //     console.log(player.guildId, " :: Player got Destroyed :: ");
+    //     const channel = client.channels.cache.get(player.textChannelId);
+    //     if(!channel) return console.log("No Channel?", player);
+    //     channel.send({
+    //         embeds: [
+    //             new EmbedBuilder()
+    //             .setColor("Red")
+    //             .setTitle("❌ Player Destroyed")
+    //             .setDescription(`Reason: ${reason || "Unknown"}`)
+    //             .setTimestamp()
+    //         ]
+    //     })
+    // }).on("playerDisconnect", (player, voiceChannelId) => {
+    //     console.log(player.guildId, " :: Player disconnected the Voice Channel :: ", voiceChannelId);
+    // }).on("playerMove", (player, oldVoiceChannelId, newVoiceChannelId) => {
+    //     console.log(player.guildId, " :: Player moved from Voice Channel :: ", oldVoiceChannelId, " :: To ::", newVoiceChannelId);
+    // }).on("playerSocketClosed", (player, payload) => {
+    //     console.log(player.guildId, " :: Player socket got closed from lavalink :: ", payload);
+    // })
 
-  lavaclient.on("nodeDebug", (node, message) => {
-    client.logger.debug(`Node "${node.id}" debug: ${message}`);
-  });
-
-  lavaclient.on("nodeTrackStart", (_node, queue, song) => {
-    const fields = [];
-
-    const embed = new EmbedBuilder()
-      .setAuthor({ name: "Now Playing" })
-      .setColor(client.config.EMBED_COLORS.BOT_EMBED)
-      .setDescription(`[${song.title}](${song.uri})`)
-      .setFooter({ text: `Requested By: ${song.requester}` });
-
-    if (song.sourceName === "youtube") {
-      const identifier = song.identifier;
-      const thumbnail = `https://img.youtube.com/vi/${identifier}/hqdefault.jpg`;
-      embed.setThumbnail(thumbnail);
-    }
-
-    fields.push({
-      name: "Song Duration",
-      value: "`" + prettyMs(song.length, { colonNotation: true }) + "`",
-      inline: true,
-    });
-
-    if (queue.tracks.length > 0) {
-      fields.push({
-        name: "Position in Queue",
-        value: (queue.tracks.length + 1).toString(),
-        inline: true,
-      });
-    }
-
-    embed.setFields(fields);
-    queue.data.channel.safeSend({ embeds: [embed] });
-  });
-
-  lavaclient.on("nodeQueueFinish", async (_node, queue) => {
-    queue.data.channel.safeSend("Queue has ended.");
-    await client.musicManager.destroyPlayer(queue.player.guildId).then(queue.player.disconnect());
-  });
+    // /**
+    //  * Queue/Track Events
+    //  */
+    // client.lavalink.on("trackStart", (player, track) => {
+    //     console.log(player.guildId, " :: Started Playing :: ", track.info.title, "QUEUE:", player.queue.tracks.map(v => v.info.title));
+    //     const channel = client.channels.cache.get(player.textChannelId);
+    //     if(!channel) return;
+    //     const embed = new EmbedBuilder()
+    //     .setColor("Blurple")
+    //     .setTitle(`🎶 ${track.info.title}`.substring(0, 256))
+    //     .setThumbnail(track.info.artworkUrl || track.pluginInfo?.artworkUrl || null)
+    //     .setDescription(
+    //         [
+    //             `> - **Author:** ${track.info.author}`,
+    //             `> - **Duration:** ${formatMS_HHMMSS(track.info.duration)} | Ends <t:${Math.floor((Date.now() + track.info.duration) / 1000)}:R>`,
+    //             `> - **Source:** ${track.info.sourceName}`,
+    //             `> - **Requester:** <@${(track.requester as CustomRequester).id}>`,
+    //             track.pluginInfo?.clientData?.fromAutoplay ? `> *From Autoplay* ✅` : undefined
+    //         ].filter(v => typeof v === "string" && v.length).join("\n").substring(0, 4096)
+    //     )
+    //     .setFooter({
+    //         text: `Requested by ${(track.requester as CustomRequester)?.username}`,
+    //         iconURL: (track?.requester as CustomRequester)?.avatar || undefined
+    //     })
+    //     .setTimestamp();
+    //     // local tracks are invalid uris
+    //     if(/^https?:\/\//.test(track.info.uri)) embed.setURL(track.info.uri)
+    //     channel.send({
+    //         embeds: [ 
+    //             embed  
+    //         ]
+    //     })
+    // }).on("trackEnd", (player, track, payload) => {
+    //     console.log(player.guildId, " :: Finished Playing :: ", track.info.title)
+    // }).on("trackError", (player, track, payload) => {
+    //     console.log(player.guildId, " :: Errored while Playing :: ", track.info.title, " :: ERROR DATA :: ", payload)
+    // }).on("trackStuck", (player, track, payload) => {
+    //     console.log(player.guildId, " :: Got Stuck while Playing :: ", track.info.title, " :: STUCKED DATA :: ", payload)
+        
+    // }).on("queueEnd", (player, track, payload) => {
+    //     console.log(player.guildId, " :: No more tracks in the queue, after playing :: ", track?.info?.title || track)
+    //     const channel = client.channels.cache.get(player.textChannelId!) as TextChannel;
+    //     if(!channel) return;
+    //     channel.send({
+    //         embeds: [
+    //             new EmbedBuilder()
+    //             .setColor("Red")
+    //             .setTitle("❌ Queue Ended")
+    //             .setTimestamp()
+    //         ]
+    //     })
+    // }).on("playerUpdate", (player) => {
+    //     // use this event to udpate the player in the your cache if you want to save the player's data(s) externally!
+    //     /**
+    //      * 
+    //     */
+    // });
 
   return lavaclient;
 };

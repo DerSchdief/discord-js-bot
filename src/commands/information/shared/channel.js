@@ -1,12 +1,14 @@
 const { EmbedBuilder, ChannelType } = require("discord.js");
-const { EMBED_COLORS } = require("@root/config");
 const { stripIndent } = require("common-tags");
 const channelTypes = require("@helpers/channelTypes");
 
 /**
  * @param {import('discord.js').GuildChannel} channel
+ * @param {import('discord.js').ChatInputCommandInteraction} interaction
  */
-module.exports = (channel) => {
+module.exports = (interaction) => {
+
+  const channel = interaction.options.getChannel("name") || interaction.channel;
   const { id, name, parent, position, type } = channel;
 
   let desc = stripIndent`
@@ -54,7 +56,7 @@ module.exports = (channel) => {
 
   const embed = new EmbedBuilder()
     .setAuthor({ name: "Channel Details" })
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(interaction.client.config.EMBED_COLORS.BOT_EMBED)
     .setDescription(desc);
 
   return { embeds: [embed] };

@@ -4,7 +4,7 @@ const { ActivityType } = require("discord.js");
  * @param {import('@src/structures').BotClient} client
  */
 function updatePresence(client) {
-  let message = client.config.PRESENCE.MESSAGE;
+  let message = client.config.BOT_SETTINGS.MAINTENANCEMODE ? "den Wartungsarbeiten zu" : client.config.PRESENCE.MESSAGE;
 
   if (message.includes("{servers}")) {
     message = message.replaceAll("{servers}", client.guilds.cache.size);

@@ -6,7 +6,6 @@ const {
   ButtonStyle,
 } = require("discord.js");
 const { timeformat } = require("@helpers/Utils");
-const { EMBED_COLORS, SUPPORT_SERVER, DASHBOARD } = require("@root/config.js");
 const botstats = require("../shared/botstats");
 
 /**
@@ -72,7 +71,7 @@ module.exports = {
 function botInvite(client) {
   const embed = new EmbedBuilder()
     .setAuthor({ name: "Invite" })
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setThumbnail(client.user.displayAvatarURL())
     .setDescription("Hey there! Thanks for considering to invite me\nUse the button below to navigate where you want");
 
@@ -80,13 +79,13 @@ function botInvite(client) {
   let components = [];
   components.push(new ButtonBuilder().setLabel("Invite Link").setURL(client.getInvite()).setStyle(ButtonStyle.Link));
 
-  if (SUPPORT_SERVER) {
-    components.push(new ButtonBuilder().setLabel("Support Server").setURL(SUPPORT_SERVER).setStyle(ButtonStyle.Link));
+  if (client.config.SUPPORT_SERVER) {
+    components.push(new ButtonBuilder().setLabel("Support Server").setURL(client.config.SUPPORT_SERVER).setStyle(ButtonStyle.Link));
   }
 
-  if (DASHBOARD.enabled) {
+  if (client.config.DASHBOARD.ENABLED) {
     components.push(
-      new ButtonBuilder().setLabel("Dashboard Link").setURL(DASHBOARD.baseURL).setStyle(ButtonStyle.Link)
+      new ButtonBuilder().setLabel("Dashboard Link").setURL(client.config.DASHBOARD.baseURL).setStyle(ButtonStyle.Link)
     );
   }
 

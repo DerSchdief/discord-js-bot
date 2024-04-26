@@ -10,11 +10,11 @@ module.exports = {
   category: "MUSIC",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "[page]",
   },
   slashCommand: {
-    enabled: true,
+    enabled: false,
     options: [
       {
         name: "page",
@@ -47,7 +47,7 @@ function getQueue({ client, guild }, pgNo) {
   if (!player) return "🚫 There is no music playing in this guild.";
 
   const queue = player.queue;
-  const embed = new EmbedBuilder().setColor(EMBED_COLORS.BOT_EMBED).setAuthor({ name: `Queue for ${guild.name}` });
+  const embed = new EmbedBuilder().setColor(client.config.EMBED_COLORS.BOT_EMBED).setAuthor({ name: `Queue for ${guild.name}` });
 
   // change for the amount of tracks per page
   const multiple = 10;

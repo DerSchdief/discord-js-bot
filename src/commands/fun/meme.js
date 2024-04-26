@@ -5,7 +5,6 @@ const {
   ApplicationCommandOptionType,
   ButtonStyle,
 } = require("discord.js");
-const { EMBED_COLORS } = require("@root/config.js");
 const { getJson } = require("@helpers/HttpUtils");
 const { getRandomInt } = require("@helpers/Utils");
 
@@ -97,7 +96,7 @@ module.exports = {
       if (response.customId !== "regenMemeBtn") return;
       await response.deferUpdate();
 
-      const embed = await getRandomEmbed(choice);
+      const embed = await getRandomEmbed(choice, interaction);
       await interaction.editReply({
         embeds: [embed],
         components: [buttonRow],
@@ -113,18 +112,18 @@ module.exports = {
   },
 };
 
-async function getRandomEmbed(choice) {
+async function getRandomEmbed(choice, {client}) {
   const subReddits = ["meme", "Memes_Of_The_Dank", "memes", "dankmemes"];
   let rand = choice ? choice : subReddits[getRandomInt(subReddits.length)];
 
   const response = await getJson(`https://www.reddit.com/r/${rand}/random/.json`);
   if (!response.success) {
-    return new EmbedBuilder().setColor(EMBED_COLORS.ERROR).setDescription("Failed to fetch meme. Try again!");
+    return new EmbedBuilder().setColor(client.config.EMBED_COLORS.ERROR).setDescription("Failed to fetch meme. Try again!");
   }
 
   const json = response.data;
   if (!Array.isArray(json) || json.length === 0) {
-    return new EmbedBuilder().setColor(EMBED_COLORS.ERROR).setDescription(`No meme found matching ${choice}`);
+    return new EmbedBuilder().setColor(client.config.EMBED_COLORS.ERROR).setDescription(`No meme found matching ${choice}`);
   }
 
   try {
@@ -141,6 +140,6 @@ async function getRandomEmbed(choice) {
       .setColor("Random")
       .setFooter({ text: `👍 ${memeUpvotes} | 💬 ${memeNumComments}` });
   } catch (error) {
-    return new EmbedBuilder().setColor(EMBED_COLORS.ERROR).setDescription("Failed to fetch meme. Try again!");
+    return new EmbedBuilder().setColor(client.config.EMBED_COLORS.ERROR).setDescription("Failed to fetch meme. Try again!");
   }
 }

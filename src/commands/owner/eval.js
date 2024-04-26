@@ -76,7 +76,7 @@ const buildErrorResponse = (err) => {
   embed
     .setAuthor({ name: "📤 Error" })
     .setDescription("```js\n" + (err.length > 4096 ? `${err.substr(0, 4000)}...` : err) + "\n```")
-    .setColor(EMBED_COLORS.ERROR)
+    .setColor(client.config.EMBED_COLORS.ERROR)
     .setTimestamp(Date.now());
 
   return { embeds: [embed] };

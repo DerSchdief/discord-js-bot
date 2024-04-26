@@ -10,7 +10,7 @@ const CHANNEL_PERMS = ["ViewChannel", "SendMessages", "EmbedLinks", "ManageMessa
 module.exports = {
   name: "suggestion",
   description: "configure suggestion system",
-  category: "SUGGESTION",
+  category: "SUGGESTIONS",
   userPermissions: ["ManageGuild"],
   command: {
     enabled: true,

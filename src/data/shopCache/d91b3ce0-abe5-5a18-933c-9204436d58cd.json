@@ -1,0 +1,108 @@
+{
+  "offers": {
+    "offers": [
+      "b8bc5d1b-44aa-aa83-0246-b1a6bb496177",
+      "ef67d6cb-4f7f-28ce-2973-cf90a97ae54d",
+      "c4422d16-4cb1-75d5-fd18-dda0bb05f46b",
+      "c9678d8c-4327-f397-b0ec-dca3c3d6fb15"
+    ],
+    "expires": 1713743999,
+    "accessory": {
+      "offers": [
+        {
+          "cost": 4000,
+          "rewards": [
+            {
+              "ItemTypeID": "d5f120f8-ff8c-4aac-92ea-f2b5acbe9475",
+              "ItemID": "78302cd4-4cb9-ba9b-562f-28baa9f827d7",
+              "Quantity": 1
+            }
+          ],
+          "contractID": "4cff28f8-47e9-62e5-2625-49a517f981d2"
+        },
+        {
+          "cost": 5500,
+          "rewards": [
+            {
+              "ItemTypeID": "dd3bf334-87f3-40bd-b043-682a57a8dc3a",
+              "ItemID": "71532330-4d73-4950-b7e0-2b9a00faa2ff",
+              "Quantity": 2
+            }
+          ],
+          "contractID": "b0bd7062-4d62-1ff1-7920-b39622ee926b"
+        },
+        {
+          "cost": 4500,
+          "rewards": [
+            {
+              "ItemTypeID": "3f296c07-64c3-494c-923b-fe692a4fa1bd",
+              "ItemID": "0b637c4d-4761-c4ec-abf9-90a749139429",
+              "Quantity": 1
+            }
+          ],
+          "contractID": "43aeb2d6-46df-c1b1-5420-8cbbd67e7e9e"
+        },
+        {
+          "cost": 4000,
+          "rewards": [
+            {
+              "ItemTypeID": "d5f120f8-ff8c-4aac-92ea-f2b5acbe9475",
+              "ItemID": "d7e96c11-403c-8c0e-782e-239546be7c9e",
+              "Quantity": 1
+            }
+          ],
+          "contractID": "34bfbf55-48b6-dafc-33a6-2e978c5af6a9"
+        }
+      ],
+      "expires": 1713916799
+    }
+  },
+  "bundles": [
+    {
+      "uuid": "fe884e91-4079-7a94-4cf5-ae85cef9e9f6",
+      "expires": 1714532399
+    }
+  ],
+  "night_market": {
+    "offers": [
+      {
+        "uuid": "80073abf-4fea-b06d-f70c-bdbe6d8ce0a7",
+        "realPrice": 875,
+        "nmPrice": 648,
+        "percent": 26
+      },
+      {
+        "uuid": "9d501eec-4084-5d44-32ef-6e8ed5b0ed49",
+        "realPrice": 1275,
+        "nmPrice": 765,
+        "percent": 40
+      },
+      {
+        "uuid": "186d9fbb-400e-665b-e5f3-c08b24b6974f",
+        "realPrice": 1275,
+        "nmPrice": 893,
+        "percent": 30
+      },
+      {
+        "uuid": "e1b5cdca-4df5-5c4e-f34a-3cbdd3fd8735",
+        "realPrice": 1275,
+        "nmPrice": 995,
+        "percent": 22
+      },
+      {
+        "uuid": "21ceb4b1-480f-dddb-1422-8aad73519181",
+        "realPrice": 3550,
+        "nmPrice": 2556,
+        "percent": 28
+      },
+      {
+        "uuid": "4d19c241-4350-6658-f5a6-5c99ca8e5e99",
+        "realPrice": 1775,
+        "nmPrice": 1119,
+        "percent": 37
+      }
+    ],
+    "expires": 1714435199
+  },
+  "timestamp": 1713715188343
+}

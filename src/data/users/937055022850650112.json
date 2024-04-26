@@ -1,0 +1,40 @@
+{
+  "accounts": [
+    {
+      "id": "937055022850650112",
+      "puuid": "f93a1e3a-8a24-5b70-91cb-6788a6d74c62",
+      "auth": {
+        "rso": "eyJraWQiOiJzMSIsImFsZyI6IlJTMjU2In0.eyJwcCI6eyJjIjoiZXUifSwic3ViIjoiZjkzYTFlM2EtOGEyNC01YjcwLTkxY2ItNjc4OGE2ZDc0YzYyIiwic2NwIjpbImFjY291bnQiLCJvcGVuaWQiXSwiY2xtIjpbImVtYWlsX3ZlcmlmaWVkIiwib3BlbmlkIiwicHciLCJyZ25fRVVXMSIsInBob25lX251bWJlcl92ZXJpZmllZCIsImxvY2FsZSIsImFjY291bnRfdmVyaWZpZWQiLCJmZWRlcmF0ZWRfaWRlbnRpdHlfZGV0YWlscyIsImZlZGVyYXRlZF9pZGVudGl0eV9wcm92aWRlcnMiLCJhY2N0X2dudCIsImFjY3QiLCJhZ2UiLCJhZmZpbml0eSJdLCJkYXQiOnsicCI6bnVsbCwiciI6IkVVVzEiLCJjIjoiZWMxIiwidSI6MzAyOTkxMjkyOTA2ODA5NiwibGlkIjoibV95QzR0T1FudFdfLXhjVlpOQXh3dyJ9LCJpc3MiOiJodHRwczovL2F1dGgucmlvdGdhbWVzLmNvbSIsInBsdCI6eyJkZXYiOiJ1bmtub3duIiwiaWQiOiJ1bmtub3duIn0sImV4cCI6MTcxNDAzMDE2MCwiaWF0IjoxNzE0MDI2NTYwLCJqdGkiOiJKTFNXanJDSV9JayIsImNpZCI6InBsYXktdmFsb3JhbnQtd2ViLXByb2QifQ.GhuAMorAlz3Hm86QOAMHV9Wi3OgTk70cFhftZKNhQsuArfsoHOWceIXgslAUKJf7okRFkmmHepEFfO4FLMg0JbTiLRzxFUGX3yNEWER9WS9vlo7ZWVuLh9ohPrZr7MOFOw_tsDtoEYURc15Ysth-e-mAhqzwDnVdgYSEGmv-LLU",
+        "idt": "eyJraWQiOiJzMSIsInR5cCI6ImlkX3Rva2VuK2p3dCIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoiNGYtLUV4LVNxdmpjSlBlY3pScTllQSIsInN1YiI6ImY5M2ExZTNhLThhMjQtNWI3MC05MWNiLTY3ODhhNmQ3NGM2MiIsImNvdW50cnkiOiJkZXUiLCJwbGF5ZXJfcGxvY2FsZSI6bnVsbCwiY291bnRyeV9hdCI6MTU4NjMwOTMxNjAwMCwiYW1yIjpbInBhc3N3b3JkIiwiY29va2llIl0sImlzcyI6Imh0dHBzOi8vYXV0aC5yaW90Z2FtZXMuY29tIiwibG9sIjpbeyJjdWlkIjozMDI5OTEyOTI5MDY4MDk2LCJjcGlkIjoiRVVXMSIsInVpZCI6MzAyOTkxMjkyOTA2ODA5NiwidW5hbWUiOiJEZXJTY2hkaWVmIiwicHRyaWQiOm51bGwsInBpZCI6IkVVVzEiLCJzdGF0ZSI6IkVOQUJMRUQifV0sInBob25lX251bWJlcl92ZXJpZmllZCI6ZmFsc2UsIm5vbmNlIjoiMSIsImFjY291bnRfdmVyaWZpZWQiOmZhbHNlLCJhdWQiOiJwbGF5LXZhbG9yYW50LXdlYi1wcm9kIiwiYWNyIjoiMCIsImxvbF9yZWdpb24iOm51bGwsInBsYXllcl9sb2NhbGUiOiJkZSIsImV4cCI6MTcxNDExMjk2MCwiaWF0IjoxNzE0MDI2NTYwLCJhY2N0Ijp7ImdhbWVfbmFtZSI6IkRlclNjaGRpZWYiLCJ0YWdfbGluZSI6IjA0MTgifSwiYWdlIjoyOCwianRpIjoiVGF2anRVLURIOWMiLCJsb2dpbl9jb3VudHJ5IjoiZGV1In0.ep95sPQ7WNVGj21HAX5F1l6fhSpBIiqNiqHRCKdB1prOR5yLBmZZ4-cPGS5rNyFyv5G4FEHejmf8T6ByDiAhw45wQjMDrITVBrkZPQVS7ew3r__nQo-zV7Oo9BmLtYaBIqiIwZpFO7QGWBocBeFMP5IhcIGV12kQPyXZTOP5TFM",
+        "cookies": {
+          "": "",
+          "tdid": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRiNjUwZWQxLTMyNTktNDJmOC04ZjNiLWVhMTA4ODJkOWRkZCIsIm5vbmNlIjoiSG1mTmlUd1NkUk09IiwiaWF0IjoxNzE0MDI2NTU5fQ.1swvSfVtrLUmgpRcyg0LwgBxOda1Cu3Nrk4Rbn-z2kg",
+          "ssid": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzc2lkIjoiRlRpVmlCMF9sNlNXNF85ejZxaVhFZy5oU1pOX05FX3BJNGpsLUV5QW1ua2pnIiwic3ViIjoiZjkzYTFlM2EtOGEyNC01YjcwLTkxY2ItNjc4OGE2ZDc0YzYyIiwibG9naW5Ub2tlbiI6IjZmMjNhOGY3LTA5YjMtNGRkZS04MGNlLTVkNjVkMzc4NDYzOSIsInNlcmllc1Rva2VuIjoiNjJmOTQ2YzYtNDU1OC00NmQ0LTk3ZmItNmZmYjVlNDY3MjRiIiwiaWF0IjoxNzE0MDI2NTYwfQ.-mfNvb1NxkPM13zpXvYDSQ6rNrLP8fUWclrqcFJVNsk",
+          "clid": "ec1",
+          "sub": "f93a1e3a-8a24-5b70-91cb-6788a6d74c62",
+          "csid": "FTiViB0_l6SW4_9z6qiXEg.hSZN_NE_pI4jl-EyAmnkjg",
+          "__cf_bm": "jswbsa31gKz3BaYt5qHHbsHF.mXwokniR28m1c74g7c-1714026560-1.0.1.1-j_Q_.dbA48f2iHOcb0WqqhEUT1kjW..nVriU0FAho7Gda8sgmO8cKVZAal_FRFkUCKl8xvIQhifEFSk11uGH2g"
+        },
+        "ent": "eyJraWQiOiJrMSIsImFsZyI6IlJTMjU2In0.eyJlbnRpdGxlbWVudHMiOltdLCJhdF9oYXNoIjoiUkFLbWpPYVdONkE2LUs2YzFsTTBQUSIsInN1YiI6ImY5M2ExZTNhLThhMjQtNWI3MC05MWNiLTY3ODhhNmQ3NGM2MiIsImlzcyI6Imh0dHBzOlwvXC9lbnRpdGxlbWVudHMuYXV0aC5yaW90Z2FtZXMuY29tIiwiaWF0IjoxNzEzNTE3MTM4LCJqdGkiOiI3WGh3ajB6amtvVSJ9.zXNaW3HgQVxgIV3aejl06aACAEXYmg3VszuNNJ3x0OQFJ4SPgFl0hNdyXt1Zpd5t1LjKbkBair0XhIEagTbqQMB00omDdqOiqcia1qTAfnj-QoXcUUcxk4uOzsHqJRWtTpWscp1uCN5AsiSpL9kLzNnyzSWzTYlfoDwoZ8c8PXATWRvo48Z2JubnGZrabCEs6LscX1xei4rvKaSCBo2UfZu2QvbHZL-llAZMZRPFqPnZTeqqFCfrdfrwauvwjQWVq6zY5DFi3DD148mWSg6hMLrYciCuLkSV5T8Y2mRkAH20Vuwgrc3iergvtuka22oYe1-wcNl4mlWzmRUosez6Uw"
+      },
+      "alerts": [],
+      "username": "DerSchdief#0418",
+      "region": "eu",
+      "authFailures": 0,
+      "lastFetchedData": 1713517138350,
+      "lastNoticeSeen": "",
+      "lastSawEasterEgg": 0
+    }
+  ],
+  "currentAccount": 1,
+  "settings": {
+    "dailyShop": false,
+    "pingOnAutoDailyShop": true,
+    "hideIgn": false,
+    "othersCanViewShop": true,
+    "othersCanViewColl": true,
+    "othersCanViewProfile": true,
+    "othersCanUseAccountButtons": true,
+    "locale": "Automatic"
+  }
+}

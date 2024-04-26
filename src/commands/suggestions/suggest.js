@@ -15,7 +15,7 @@ const { stripIndent } = require("common-tags");
 module.exports = {
   name: "suggest",
   description: "submit a suggestion",
-  category: "SUGGESTION",
+  category: "SUGGESTIONS",
   cooldown: 20,
   command: {
     enabled: true,

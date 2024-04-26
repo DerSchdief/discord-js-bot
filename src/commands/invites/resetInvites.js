@@ -12,7 +12,7 @@ module.exports = {
   userPermissions: ["ManageGuild"],
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "<@member>",
     aliases: ["clearinvites"],
     minArgsCount: 1,

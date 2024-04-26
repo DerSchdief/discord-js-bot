@@ -50,7 +50,7 @@ async function stats(member, settings) {
 
   const embed = new EmbedBuilder()
     .setThumbnail(member.user.displayAvatarURL())
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .addFields(
       {
         name: "Username",

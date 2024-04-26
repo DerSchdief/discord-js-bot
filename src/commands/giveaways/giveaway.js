@@ -27,7 +27,7 @@ const edit = require("./sub/edit");
 module.exports = {
   name: "giveaway",
   description: "giveaway commands",
-  category: "GIVEAWAY",
+  category: "GIVEAWAYS",
   command: {
     enabled: true,
     minArgsCount: 1,
@@ -232,7 +232,6 @@ module.exports = {
     //
     if (sub === "start") {
       const channel = interaction.options.getChannel("channel");
-      await interaction.followUp("Starting Giveaway system...");
       return await runModalSetup(interaction, channel);
     }
 

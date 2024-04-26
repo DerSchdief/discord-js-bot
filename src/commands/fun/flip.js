@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { EMBED_COLORS } = require("@root/config.js");
 
 const NORMAL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_,;.?!/\\'0123456789";
 const FLIPPED = "∀qϽᗡƎℲƃHIſʞ˥WNOԀὉᴚS⊥∩ΛMXʎZɐqɔpǝɟbɥıظʞןɯuodbɹsʇnʌʍxʎz‾'؛˙¿¡/\\,0ƖᄅƐㄣϛ9ㄥ86";
@@ -87,7 +86,7 @@ module.exports = {
     if (sub === "coin") {
       const items = ["HEAD", "TAIL"];
       const toss = items[Math.floor(Math.random() * items.length)];
-      await interaction.followUp({ embeds: [firstEmbed(interaction.user)] });
+      await interaction.followUp({ embeds: [firstEmbed(interaction)] });
 
       setTimeout(() => {
         interaction.editReply({ embeds: [secondEmbed()] }).catch(() => {});
@@ -106,8 +105,8 @@ module.exports = {
   },
 };
 
-const firstEmbed = (user) =>
-  new EmbedBuilder().setColor(EMBED_COLORS.TRANSPARENT).setDescription(`${user.username}, started a coin toss`);
+const firstEmbed = ({client, user}) =>
+  new EmbedBuilder().setColor(client.config.EMBED_COLORS.TRANSPARENT).setDescription(`${user.username}, started a coin toss`);
 
 const secondEmbed = () => new EmbedBuilder().setDescription("The coin is in the air");
 

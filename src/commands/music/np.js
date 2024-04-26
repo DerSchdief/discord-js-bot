@@ -12,11 +12,11 @@ module.exports = {
   category: "MUSIC",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     aliases: ["nowplaying"],
   },
   slashCommand: {
-    enabled: true,
+    enabled: false,
   },
 
   async messageRun(message, args) {
@@ -26,7 +26,7 @@ module.exports = {
 
   async interactionRun(interaction) {
     const response = nowPlaying(interaction);
-    await interaction.followUp(response);
+    await interaction.editReply(response);
   },
 };
 
@@ -41,7 +41,7 @@ function nowPlaying({ client, guildId }) {
   const end = track.length > 6.048e8 ? "🔴 LIVE" : new Date(track.length).toISOString().slice(11, 19);
 
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: "Now playing" })
     .setDescription(`[${track.title}](${track.uri})`)
     .addFields(

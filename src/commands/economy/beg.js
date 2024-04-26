@@ -1,6 +1,5 @@
 const { EmbedBuilder } = require("discord.js");
 const { getUser } = require("@schemas/User");
-const { EMBED_COLORS, ECONOMY } = require("@root/config.js");
 
 /**
  * @type {import("@structures/Command")}
@@ -24,12 +23,12 @@ module.exports = {
   },
 
   async interactionRun(interaction) {
-    const response = await beg(interaction.user);
+    const response = await beg(interaction);
     await interaction.followUp(response);
   },
 };
 
-async function beg(user) {
+async function beg(interaction) {
   let users = [
     "PewDiePie",
     "T-Series",
@@ -59,17 +58,17 @@ async function beg(user) {
     "Joe Mama",
   ];
 
-  let amount = Math.floor(Math.random() * `${ECONOMY.MAX_BEG_AMOUNT}` + `${ECONOMY.MIN_BEG_AMOUNT}`);
-  const userDb = await getUser(user);
+  let amount = Math.floor(Math.random() * `${client.config.ECONOMY.MAX_BEG_AMOUNT}` + `${client.config.ECONOMY.MIN_BEG_AMOUNT}`);
+  const userDb = await getUser(interaction.user);
   userDb.coins += amount;
   await userDb.save();
 
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
-    .setAuthor({ name: `${user.username}`, iconURL: user.displayAvatarURL() })
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
+    .setAuthor({ name: `${interaction.user.username}`, iconURL: interaction.user.displayAvatarURL() })
     .setDescription(
-      `**${users[Math.floor(Math.random() * users.length)]}** donated you **${amount}** ${ECONOMY.CURRENCY}\n` +
-        `**Updated Balance:** **${userDb.coins}** ${ECONOMY.CURRENCY}`
+      `**${users[Math.floor(Math.random() * users.length)]}** donated you **${amount}** ${client.config.ECONOMY.CURRENCY}\n` +
+        `**Updated Balance:** **${userDb.coins}** ${client.config.ECONOMY.CURRENCY}`
     );
 
   return { embeds: [embed] };

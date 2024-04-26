@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { MESSAGES, EMBED_COLORS } = require("@root/config.js");
 const { getJson } = require("@helpers/HttpUtils");
 const { stripIndent } = require("common-tags");
 
@@ -13,7 +12,7 @@ module.exports = {
   botPermissions: ["EmbedLinks"],
   cooldown: 5,
   command: {
-    enabled: true,
+    enabled: false,
     usage: "<pokemon>",
     minArgsCount: 1,
   },
@@ -37,21 +36,21 @@ module.exports = {
 
   async interactionRun(interaction) {
     const pokemon = interaction.options.getString("pokemon");
-    const response = await pokedex(pokemon);
+    const response = await pokedex(pokemon, interaction);
     await interaction.followUp(response);
   },
 };
 
-async function pokedex(pokemon) {
+async function pokedex(pokemon, { client }) {
   const response = await getJson(`https://pokeapi.glitch.me/v1/pokemon/${pokemon}`);
   if (response.status === 404) return "```The given pokemon is not found```";
-  if (!response.success) return MESSAGES.API_ERROR;
+  if (!response.success) return client.config.MESSAGES.API_ERROR;
 
   const json = response.data[0];
 
   const embed = new EmbedBuilder()
     .setTitle(`Pokédex - ${json.name}`)
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setThumbnail(json.sprite)
     .setDescription(
       stripIndent`

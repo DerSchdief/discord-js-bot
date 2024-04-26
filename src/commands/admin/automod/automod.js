@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandOptionType, ChannelType } = require("discord.js");
-const { EMBED_COLORS } = require("@root/config.js");
 const { stripIndent } = require("common-tags");
 
 /**
@@ -206,7 +205,7 @@ module.exports = {
 
     let response;
 
-    if (sub === "status") response = await getStatus(settings, interaction.guild);
+    if (sub === "status") response = await getStatus(settings, interaction);
     else if (sub === "strikes") response = await setStrikes(settings, interaction.options.getInteger("amount"));
     else if (sub === "action")
       response = await setAction(settings, interaction.guild, interaction.options.getString("action"));
@@ -225,11 +224,11 @@ module.exports = {
   },
 };
 
-async function getStatus(settings, guild) {
+async function getStatus(settings, interaction) {
   const { automod } = settings;
 
   const logChannel = settings.modlog_channel
-    ? guild.channels.cache.get(settings.modlog_channel).toString()
+    ? interaction.guild.channels.cache.get(settings.modlog_channel).toString()
     : "Not Configured";
 
   // String Builder
@@ -244,8 +243,8 @@ async function getStatus(settings, guild) {
   `;
 
   const embed = new EmbedBuilder()
-    .setAuthor({ name: "Automod Configuration", iconURL: guild.iconURL() })
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setAuthor({ name: "Automod Configuration", iconURL: interaction.guild.iconURL() })
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setDescription(desc)
     .addFields(
       {

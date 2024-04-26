@@ -1,7 +1,6 @@
 const { EmbedBuilder, AttachmentBuilder, ApplicationCommandOptionType } = require("discord.js");
 const { getBuffer } = require("@helpers/HttpUtils");
 const { getImageFromMessage } = require("@helpers/BotUtils");
-const { EMBED_COLORS, IMAGE } = require("@root/config.js");
 
 const availableFilters = [
   "blur",
@@ -91,7 +90,7 @@ module.exports = {
 
     const attachment = new AttachmentBuilder(response.buffer, { name: "attachment.png" });
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.TRANSPARENT)
+      .setColor(client.config.EMBED_COLORS.TRANSPARENT)
       .setImage("attachment://attachment.png")
       .setFooter({ text: `Requested by: ${message.author.username}` });
 
@@ -103,13 +102,14 @@ module.exports = {
     const user = interaction.options.getUser("user");
     const imageLink = interaction.options.getString("link");
     const filter = interaction.options.getString("name");
+    const client = interaction.client;
 
     let image;
     if (user) image = user.displayAvatarURL({ size: 256, extension: "png" });
     if (!image && imageLink) image = imageLink;
     if (!image) image = author.displayAvatarURL({ size: 256, extension: "png" });
 
-    const url = getFilter(filter, image);
+    const url = getFilter(filter, image, interaction);
     const response = await getBuffer(url, {
       headers: {
         Authorization: `Bearer ${process.env.STRANGE_API_KEY}`,
@@ -120,7 +120,7 @@ module.exports = {
 
     const attachment = new AttachmentBuilder(response.buffer, { name: "attachment.png" });
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.TRANSPARENT)
+      .setColor(client.config.EMBED_COLORS.TRANSPARENT)
       .setImage("attachment://attachment.png")
       .setFooter({ text: `Requested by: ${author.username}` });
 
@@ -128,8 +128,8 @@ module.exports = {
   },
 };
 
-function getFilter(filter, image) {
-  const endpoint = new URL(`${IMAGE.BASE_API}/filters/${filter}`);
+function getFilter(filter, image, {client}) {
+  const endpoint = new URL(`${client.config.IMAGE.BASE_API}/filters/${filter}`);
   endpoint.searchParams.append("image", image);
 
   // add additional params if any

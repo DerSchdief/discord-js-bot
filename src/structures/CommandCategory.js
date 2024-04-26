@@ -3,6 +3,7 @@ const config = require("@root/config");
 module.exports = {
   ADMIN: {
     name: "Admin",
+    enabled: config.ADMIN.ENABLED,
     image: "https://icons.iconarchive.com/icons/dakirby309/simply-styled/256/Settings-icon.png",
     emoji: "⚙️",
   },
@@ -14,6 +15,7 @@ module.exports = {
   },
   ANIME: {
     name: "Anime",
+    enabled: config.ANIME.ENABLED,
     image: "https://wallpaperaccess.com/full/5680679.jpg",
     emoji: "🎨",
   },
@@ -25,6 +27,7 @@ module.exports = {
   },
   FUN: {
     name: "Fun",
+    enabled: config.FUN.ENABLED,
     image: "https://icons.iconarchive.com/icons/flameia/aqua-smiles/128/make-fun-icon.png",
     emoji: "😂",
   },
@@ -48,6 +51,7 @@ module.exports = {
   },
   INFORMATION: {
     name: "Information",
+    enabled: config.INFORMATION.ENABLED,
     image: "https://icons.iconarchive.com/icons/graphicloads/100-flat/128/information-icon.png",
     emoji: "🪧",
   },
@@ -65,11 +69,13 @@ module.exports = {
   },
   OWNER: {
     name: "Owner",
+    enabled: config.OWNER.ENABLED,
     image: "https://www.pinclipart.com/picdir/middle/531-5318253_web-designing-icon-png-clipart.png",
     emoji: "🤴",
   },
   SOCIAL: {
     name: "Social",
+    enabled: config.SOCIAL.ENABLED,
     image: "https://icons.iconarchive.com/icons/dryicons/aesthetica-2/128/community-users-icon.png",
     emoji: "🫂",
   },
@@ -79,7 +85,7 @@ module.exports = {
     image: "https://icons.iconarchive.com/icons/graphicloads/flat-finance/256/dollar-stats-icon.png",
     emoji: "📈",
   },
-  SUGGESTION: {
+  SUGGESTIONS: {
     name: "Suggestion",
     enabled: config.SUGGESTIONS.ENABLED,
     image: "https://cdn-icons-png.flaticon.com/512/1484/1484815.png",
@@ -93,6 +99,13 @@ module.exports = {
   },
   UTILITY: {
     name: "Utility",
+    enabled: config.UTILITY.ENABLED,
+    image: "https://icons.iconarchive.com/icons/blackvariant/button-ui-system-folders-alt/128/Utilities-icon.png",
+    emoji: "🛠",
+  },
+  VALORANT: {
+    name: "Valorant",
+    enabled: config.VALORANT.ENABLED,
     image: "https://icons.iconarchive.com/icons/blackvariant/button-ui-system-folders-alt/128/Utilities-icon.png",
     emoji: "🛠",
   },

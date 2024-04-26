@@ -9,7 +9,7 @@ module.exports = {
   category: "INVITE",
   userPermissions: ["ManageGuild"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "<role-name> <invites>",
     minArgsCount: 2,
     subcommands: [

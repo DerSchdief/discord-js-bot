@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { MESSAGES } = require("@root/config.js");
 const { getJson } = require("@helpers/HttpUtils");
 const { stripIndent } = require("common-tags");
 
@@ -13,7 +12,7 @@ module.exports = {
   category: "UTILITY",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     aliases: ["git"],
     usage: "<username>",
     minArgsCount: 1,
@@ -38,17 +37,17 @@ module.exports = {
 
   async interactionRun(interaction) {
     const username = interaction.options.getString("username");
-    const response = await getGithubUser(username, interaction.user);
+    const response = await getGithubUser(username, interaction);
     await interaction.followUp(response);
   },
 };
 
 const websiteProvided = (text) => (text.startsWith("http://") ? true : text.startsWith("https://"));
 
-async function getGithubUser(target, author) {
+async function getGithubUser(target, { client, user }) {
   const response = await getJson(`https://api.github.com/users/${target}`);
   if (response.status === 404) return "```No user found with that name```";
-  if (!response.success) return MESSAGES.API_ERROR;
+  if (!response.success) return client.config.MESSAGES.API_ERROR;
 
   const json = response.data;
   const {
@@ -92,7 +91,7 @@ async function getGithubUser(target, author) {
     .setDescription(`**Bio**:\n${bio || "Not Provided"}`)
     .setImage(avatarUrl)
     .setColor(0x6e5494)
-    .setFooter({ text: `Requested by ${author.username}` });
+    .setFooter({ text: `Requested by ${user.username}` });
 
   return { embeds: [embed] };
 }

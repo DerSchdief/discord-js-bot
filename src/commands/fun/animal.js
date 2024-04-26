@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { MESSAGES, EMBED_COLORS } = require("@root/config.js");
 const { getJson } = require("@helpers/HttpUtils");
 
 const animals = ["cat", "dog", "panda", "fox", "red_panda", "koala", "bird", "raccoon", "kangaroo"];
@@ -43,18 +42,18 @@ module.exports = {
 
   async interactionRun(interaction) {
     const choice = interaction.options.getString("name");
-    const response = await getAnimal(interaction.user, choice);
+    const response = await getAnimal(interaction, choice);
     await interaction.followUp(response);
   },
 };
 
-async function getAnimal(user, choice) {
+async function getAnimal({client, user}, choice) {
   const response = await getJson(`${BASE_URL}/${choice}`);
-  if (!response.success) return MESSAGES.API_ERROR;
+  if (!response.success) return client.config.MESSAGES.API_ERROR;
 
   const imageUrl = response.data?.image;
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.TRANSPARENT)
+    .setColor(client.config.EMBED_COLORS.TRANSPARENT)
     .setImage(imageUrl)
     .setFooter({ text: `Requested by ${user.tag}` });
 

@@ -1,5 +1,4 @@
 const { parseEmoji, EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { EMBED_COLORS } = require("@root/config.js");
 const { parse } = require("twemoji-parser");
 
 /**
@@ -11,7 +10,7 @@ module.exports = {
   category: "UTILITY",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "<emoji>",
     aliases: ["enlarge"],
     minArgsCount: 1,
@@ -36,17 +35,17 @@ module.exports = {
 
   async interactionRun(interaction) {
     const emoji = interaction.options.getString("emoji");
-    const response = getEmoji(interaction.user, emoji);
+    const response = getEmoji(interaction, emoji);
     await interaction.followUp(response);
   },
 };
 
-function getEmoji(user, emoji) {
+function getEmoji({ client, user }, emoji) {
   const custom = parseEmoji(emoji);
 
   const embed = new EmbedBuilder()
     .setAuthor({ name: "❯ Big Emoji ❮" })
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setFooter({ text: `Requested by ${user.username}` });
 
   if (custom.id) {

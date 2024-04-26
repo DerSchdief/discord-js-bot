@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { OWNER_IDS, PREFIX_COMMANDS, EMBED_COLORS } = require("@root/config");
 const { parsePermissions } = require("@helpers/Utils");
 const { timeformat } = require("@helpers/Utils");
 const { getSettings } = require("@schemas/Guild");
@@ -34,7 +33,8 @@ module.exports = {
     }
 
     // Owner commands
-    if (cmd.category === "OWNER" && !OWNER_IDS.includes(message.author.id)) {
+    // if (cmd.category === "OWNER" && !OWNER_IDS.includes(message.author.id)) {
+    if (cmd.category === "OWNER" && !interaction.client.config.OWNER_IDS.some(owner => owner.id === message.author.id)) {
       return message.safeReply("This command is only accessible to bot owners");
     }
 
@@ -83,6 +83,15 @@ module.exports = {
     const cmd = interaction.client.slashCommands.get(interaction.commandName);
     if (!cmd) return interaction.reply({ content: "An error has occurred", ephemeral: true }).catch(() => {});
 
+    if (interaction.client.config.BOT_SETTINGS.MAINTENANCEMODE) {
+      if (!interaction.client.config.OWNER_IDS.some(owner => owner.id === interaction.user.id)) {
+        return interaction.reply({
+          content: `Aktuell laufen Wartungsarbeiten, daher stehen alle Funktionen nur den Bot-Ownern zur Verfügung`,
+          ephemeral: true,
+        });
+      }
+    }
+
     // callback validations
     if (cmd.validations) {
       for (const validation of cmd.validations) {
@@ -96,7 +105,7 @@ module.exports = {
     }
 
     // Owner commands
-    if (cmd.category === "OWNER" && !OWNER_IDS.includes(interaction.user.id)) {
+    if (cmd.category === "OWNER" && !interaction.client.config.OWNER_IDS.some(owner => owner.id === interaction.user.id)) {
       return interaction.reply({
         content: `This command is only accessible to bot owners`,
         ephemeral: true,
@@ -153,7 +162,7 @@ module.exports = {
    * @param {string} invoke - alias that was used to trigger this command
    * @param {string} [title] - the embed title
    */
-  getCommandUsage(cmd, prefix = PREFIX_COMMANDS.DEFAULT_PREFIX, invoke, title = "Usage") {
+  getCommandUsage(cmd, prefix = interaction.client.config.PREFIX_COMMANDS.DEFAULT_PREFIX, invoke, title = "Usage") {
     let desc = "";
     if (cmd.command.subcommands && cmd.command.subcommands.length > 0) {
       cmd.command.subcommands.forEach((sub) => {
@@ -168,7 +177,7 @@ module.exports = {
       if (cmd.cooldown) desc += `\n**Cooldown:** ${timeformat(cmd.cooldown)}`;
     }
 
-    const embed = new EmbedBuilder().setColor(EMBED_COLORS.BOT_EMBED).setDescription(desc);
+    const embed = new EmbedBuilder().setColor(client.config.EMBED_COLORS.BOT_EMBED).setDescription(desc);
     if (title) embed.setAuthor({ name: title });
     return embed;
   },
@@ -178,7 +187,7 @@ module.exports = {
    */
   getSlashUsage(cmd) {
     let desc = "";
-    if (cmd.slashCommand.options?.find((o) => o.type === ApplicationCommandOptionType.Subcommand)) {
+    if (cmd.slashCommand.options.find((o) => o.type === ApplicationCommandOptionType.Subcommand)) {
       const subCmds = cmd.slashCommand.options.filter((opt) => opt.type === ApplicationCommandOptionType.Subcommand);
       subCmds.forEach((sub) => {
         desc += `\`/${cmd.name} ${sub.name}\`\n❯ ${sub.description}\n\n`;
@@ -191,7 +200,7 @@ module.exports = {
       desc += `\n**Cooldown:** ${timeformat(cmd.cooldown)}`;
     }
 
-    return new EmbedBuilder().setColor(EMBED_COLORS.BOT_EMBED).setDescription(desc);
+    return new EmbedBuilder().setColor(client.config.EMBED_COLORS.BOT_EMBED).setDescription(desc);
   },
 };
 

@@ -1,0 +1,71 @@
+{
+  "accounts": [
+    {
+      "id": "271653961067528192",
+      "puuid": "f93a1e3a-8a24-5b70-91cb-6788a6d74c62",
+      "auth": {
+        "rso": "eyJraWQiOiJzMSIsImFsZyI6IlJTMjU2In0.eyJwcCI6eyJjIjoiZXUifSwic3ViIjoiZjkzYTFlM2EtOGEyNC01YjcwLTkxY2ItNjc4OGE2ZDc0YzYyIiwic2NwIjpbImFjY291bnQiLCJvcGVuaWQiXSwiY2xtIjpbImVtYWlsX3ZlcmlmaWVkIiwib3BlbmlkIiwicHciLCJyZ25fRVVXMSIsInBob25lX251bWJlcl92ZXJpZmllZCIsImxvY2FsZSIsImFjY291bnRfdmVyaWZpZWQiLCJmZWRlcmF0ZWRfaWRlbnRpdHlfZGV0YWlscyIsImZlZGVyYXRlZF9pZGVudGl0eV9wcm92aWRlcnMiLCJhY2N0X2dudCIsImFjY3QiLCJhZ2UiLCJhZmZpbml0eSJdLCJkYXQiOnsicCI6bnVsbCwiciI6IkVVVzEiLCJjIjoiZWMxIiwidSI6MzAyOTkxMjkyOTA2ODA5NiwibGlkIjoiWXBEQ2N2ZVpkUTdmSjVzY2NoOVA2ZyJ9LCJpc3MiOiJodHRwczovL2F1dGgucmlvdGdhbWVzLmNvbSIsInBsdCI6eyJkZXYiOiJ1bmtub3duIiwiaWQiOiJ1bmtub3duIn0sImV4cCI6MTcxNDAzMDA5NSwiaWF0IjoxNzE0MDI2NDk1LCJqdGkiOiJrVHhNSVZpeHNwZyIsImNpZCI6InBsYXktdmFsb3JhbnQtd2ViLXByb2QifQ.bb1UvlzPbp2YrS65xX2m9IO4nhnids3jR9tYExjhWnVCFcHCu-4TrEN8HxH8GTszCxQ6vHOshXbj538W0iaoIws-YgkVWyg4CCR5qH2l708A1hKpx1rZDFduV5cZA-9NboSaGb_0f008W_Wy71e3HLcPvuFfviRMBGQv7D-yTJY",
+        "idt": "eyJraWQiOiJzMSIsInR5cCI6ImlkX3Rva2VuK2p3dCIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoiYk84ZlVxbk00dEpXU1hhN3FQNXlwdyIsInN1YiI6ImY5M2ExZTNhLThhMjQtNWI3MC05MWNiLTY3ODhhNmQ3NGM2MiIsImNvdW50cnkiOiJkZXUiLCJwbGF5ZXJfcGxvY2FsZSI6bnVsbCwiY291bnRyeV9hdCI6MTU4NjMwOTMxNjAwMCwiYW1yIjpbInBhc3N3b3JkIiwiY29va2llIl0sImlzcyI6Imh0dHBzOi8vYXV0aC5yaW90Z2FtZXMuY29tIiwibG9sIjpbeyJjdWlkIjozMDI5OTEyOTI5MDY4MDk2LCJjcGlkIjoiRVVXMSIsInVpZCI6MzAyOTkxMjkyOTA2ODA5NiwidW5hbWUiOiJEZXJTY2hkaWVmIiwicHRyaWQiOm51bGwsInBpZCI6IkVVVzEiLCJzdGF0ZSI6IkVOQUJMRUQifV0sInBob25lX251bWJlcl92ZXJpZmllZCI6ZmFsc2UsIm5vbmNlIjoiMSIsImFjY291bnRfdmVyaWZpZWQiOmZhbHNlLCJhdWQiOiJwbGF5LXZhbG9yYW50LXdlYi1wcm9kIiwiYWNyIjoiMCIsImxvbF9yZWdpb24iOm51bGwsInBsYXllcl9sb2NhbGUiOiJkZSIsImV4cCI6MTcxNDExMjg5NSwiaWF0IjoxNzE0MDI2NDk1LCJhY2N0Ijp7ImdhbWVfbmFtZSI6IkRlclNjaGRpZWYiLCJ0YWdfbGluZSI6IjA0MTgifSwiYWdlIjoyOCwianRpIjoibXJkOTh4VW1BcXciLCJsb2dpbl9jb3VudHJ5IjoiZGV1In0.WYT57lkCOjPUAs3N0xE7nufZTYCshwT8ADxCHXoBApJRJrbkKN_iT37LQsFj6Ys1xF6twq5V6KHKiUaV9UIExBahGbbrqZAmo6i51IvSINWkVW5ZPXRkQoiFYa8aUE5l4yThuHVGz0Jr1lrttkEQM9hlE4TYSaTf-zjPH73inTw",
+        "cookies": {
+          "": "",
+          "tdid": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUyNTcwZWNlLTc4MTMtNGU3NC1iYjBmLWY1YTBhMWFkZTdkNyIsIm5vbmNlIjoiY2R2cUFiYWhaTFk9IiwiaWF0IjoxNzE0MDI2NDk1fQ.WPDqlt0cn-ms8ar9Gm8Rvk3nlkQYr7JXEVygDVFwbeQ",
+          "ssid": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzc2lkIjoiVTY0V09fbDlRSHJSWGF4SXNvS2tQQS42a1NUNnFDV00xUG9xNHMtaFlCSXlBIiwic3ViIjoiZjkzYTFlM2EtOGEyNC01YjcwLTkxY2ItNjc4OGE2ZDc0YzYyIiwibG9naW5Ub2tlbiI6IjU0MjRlYjljLWNhZDQtNDM0ZC1iYTQ3LTc2NGYzNWY3ZGFlYiIsInNlcmllc1Rva2VuIjoiOWU0YjcyY2UtYzc0OC00NWU2LTlhNjAtNWQ1MTU4Mzc4ODVkIiwiaWF0IjoxNzE0MDI2NDk1fQ.dxJ5o2b6Z5_Mu4OqkzzfVs6cioAGZ7TviFD7u29W9fI",
+          "clid": "ec1",
+          "sub": "f93a1e3a-8a24-5b70-91cb-6788a6d74c62",
+          "csid": "U64WO_l9QHrRXaxIsoKkPA.6kST6qCWM1Poq4s-hYBIyA",
+          "__cf_bm": "M4MMy8Ulk9Fu3fSgJjygYOUa7qG9quS5GM1TTwdsC7U-1714026495-1.0.1.1-5aZHR4QwqUnk.bGpvTFemZhDC47riCgNsscho2QY8EidfLtEmf22yJIzalPJgOmxrFsSpwGjoOGQq430x.QMtQ"
+        },
+        "ent": "eyJraWQiOiJrMSIsImFsZyI6IlJTMjU2In0.eyJlbnRpdGxlbWVudHMiOltdLCJhdF9oYXNoIjoiQnRkM28xbllVM01fTDB0cUExME9LdyIsInN1YiI6ImY5M2ExZTNhLThhMjQtNWI3MC05MWNiLTY3ODhhNmQ3NGM2MiIsImlzcyI6Imh0dHBzOlwvXC9lbnRpdGxlbWVudHMuYXV0aC5yaW90Z2FtZXMuY29tIiwiaWF0IjoxNjkxMDIxOTE3LCJqdGkiOiI2YUhjNEJDX1FlVSJ9.cd2el_z4y0k6OU8KpVEnderpaOuxU5tGBlm4Zn80F1gWf-Qh18MSbb4InzgpgSvC8LFVNrCozoDNZsZGweSkLlNx6uwf7sfp4sZoPaLHBTQ7Jcaq3h8sbU2lt6O3adW6jUbiXp3Pzrysaqm2zLQx_v6IvhI42RKP1F302YccOJJqP16P1gHq0gK_daucQ70TOl6F0oPleGOG35U7_kokeXY2oIPvjfFZoUzgiTr0Puv8aabMwd22GzLSE5Kp1IN1f_jjRV2FUdO3O1yPInqrDBVOsvEtbKml7Pqnf8c4FXh57tMnskYQ_AZZVeyq2XxQRA59r4Kn1oFMXMvcf_SlkA"
+      },
+      "alerts": [
+        {
+          "uuid": "99b0edce-48db-b898-1d6f-0fa89795226d",
+          "channel_id": "1015172733040066563"
+        }
+      ],
+      "username": "DerSchdief#0418",
+      "region": "eu",
+      "authFailures": 0,
+      "lastFetchedData": 1691021917863,
+      "lastNoticeSeen": "",
+      "lastSawEasterEgg": 1711976456270
+    },
+    {
+      "id": "271653961067528192",
+      "puuid": "d91b3ce0-abe5-5a18-933c-9204436d58cd",
+      "auth": {
+        "rso": "eyJraWQiOiJzMSIsImFsZyI6IlJTMjU2In0.eyJwcCI6eyJjIjoiZXUifSwic3ViIjoiZDkxYjNjZTAtYWJlNS01YTE4LTkzM2MtOTIwNDQzNmQ1OGNkIiwic2NwIjpbImFjY291bnQiLCJvcGVuaWQiXSwiY2xtIjpbImVtYWlsX3ZlcmlmaWVkIiwib3BlbmlkIiwicHciLCJwaG9uZV9udW1iZXJfdmVyaWZpZWQiLCJsb2NhbGUiLCJyZ25fUlUiLCJhY2NvdW50X3ZlcmlmaWVkIiwiZmVkZXJhdGVkX2lkZW50aXR5X2RldGFpbHMiLCJmZWRlcmF0ZWRfaWRlbnRpdHlfcHJvdmlkZXJzIiwiYWNjdF9nbnQiLCJhY2N0IiwiYWdlIiwiYWZmaW5pdHkiXSwiZGF0Ijp7InAiOm51bGwsInIiOiJSVSIsImMiOiJlYzEiLCJ1IjoyNjQ5NjY1MDMwMTEyODMyLCJsaWQiOiJYZk1nejdkVjRKVzBGeVhNekUyS19RIn0sImlzcyI6Imh0dHBzOi8vYXV0aC5yaW90Z2FtZXMuY29tIiwicGx0Ijp7ImRldiI6InVua25vd24iLCJpZCI6InVua25vd24ifSwiZXhwIjoxNzEzNzE4Nzg4LCJpYXQiOjE3MTM3MTUxODgsImp0aSI6InF6NlRUdFFWQVpFIiwiY2lkIjoicGxheS12YWxvcmFudC13ZWItcHJvZCJ9.egg5mjUltoVuBXhI7hVThNh48Goq8tQYqrifEbO5jhHkbJo_7u67ctS8SDLoxa3FpTC2sOpv-eDYhxofo28G3MSIpbUFXFUDkHSh6VosGEij9c_YeyP7SsIK81YrYDNupD_JdKvs8CM4bZUDFM8HcmlCygwMatWI3rT6HJKTrls",
+        "idt": "eyJraWQiOiJzMSIsInR5cCI6ImlkX3Rva2VuK2p3dCIsImFsZyI6IlJTMjU2In0.eyJhdF9oYXNoIjoiaU5WUHRySnZSSjZEQlNKblF2UnI0ZyIsInN1YiI6ImQ5MWIzY2UwLWFiZTUtNWExOC05MzNjLTkyMDQ0MzZkNThjZCIsImNvdW50cnkiOiJrYXoiLCJwbGF5ZXJfcGxvY2FsZSI6bnVsbCwiY291bnRyeV9hdCI6MTYwNzcwMDI4MDAwMCwiYW1yIjpbInBhc3N3b3JkIiwiY29va2llIl0sImlzcyI6Imh0dHBzOi8vYXV0aC5yaW90Z2FtZXMuY29tIiwibG9sIjpbeyJjdWlkIjoyNjQ5NjY1MDMwMTEyODMyLCJjcGlkIjoiUlUiLCJ1aWQiOjI2NDk2NjUwMzAxMTI4MzIsInVuYW1lIjoiWGlybzAzIiwicHRyaWQiOm51bGwsInBpZCI6IlJVIiwic3RhdGUiOiJFTkFCTEVEIn1dLCJwaG9uZV9udW1iZXJfdmVyaWZpZWQiOmZhbHNlLCJub25jZSI6IjEiLCJhY2NvdW50X3ZlcmlmaWVkIjpmYWxzZSwiYXVkIjoicGxheS12YWxvcmFudC13ZWItcHJvZCIsImFjciI6IjAiLCJsb2xfcmVnaW9uIjpudWxsLCJwbGF5ZXJfbG9jYWxlIjoiZW4iLCJleHAiOjE3MTM4MDE1ODgsImlhdCI6MTcxMzcxNTE4OCwiYWNjdCI6eyJnYW1lX25hbWUiOiJJbVNjaGRpZWZUb28iLCJ0YWdfbGluZSI6IjA0MTgifSwiYWdlIjoyMywianRpIjoicnpCSVd2V3VCMzgiLCJsb2dpbl9jb3VudHJ5IjoiZGV1In0.FZHC2P8aQpBtrRPwjHr_z09xX14nqCsDskrRhRVLHP7AdjpiRwpsBBoVSEgq4UgOvraj6iHYRHVV0qO-9WpxSQ-YOKeVMT3_MKGrypJI9tqiiSehld05QxNPCOSJO7kwVRL1QcrHqwyQBPNqdnXSMgj7B1dUJ_Hn_gejaSkfQP4",
+        "cookies": {
+          "": "",
+          "tdid": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdjMmRjNTA5LWRjNmMtNDkxYS05OTliLTc0MjY1NzcwZTc3YSIsIm5vbmNlIjoib3lxcENvRnZFZVU9IiwiaWF0IjoxNzEzNzE1MTg3fQ.v5xk5NRm3bdRyxK_B6gu_e7Ju4MxZXewh-mX8mF2Q20",
+          "ssid": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzc2lkIjoiZW5uYzJZV2xGSHBhR0VXOWNIeHpaQS5wYVluWTIzam5wdy0wSnFsVFBxYmpRIiwic3ViIjoiZDkxYjNjZTAtYWJlNS01YTE4LTkzM2MtOTIwNDQzNmQ1OGNkIiwibG9naW5Ub2tlbiI6IjhkZTkzYzc0LThkYzctNGNiYS1hYWE4LWNlZTUxOTdmMmZhNSIsInNlcmllc1Rva2VuIjoiMGY1ZGMzNjEtODI2NC00Y2E4LTllZGQtNmFjODJiYzQ3ZmY2IiwiaWF0IjoxNzEzNzE1MTg4fQ.3AeWcirsMaE-NrNFbQ2DlKXEXD5So8Va9bdoqw9Fweo",
+          "clid": "ec1",
+          "sub": "d91b3ce0-abe5-5a18-933c-9204436d58cd",
+          "csid": "ennc2YWlFHpaGEW9cHxzZA.paYnY23jnpw-0JqlTPqbjQ",
+          "__cf_bm": "T4hkhEF2Fp6O5A7HhIiYaZx4bdYiZbMWhJeTghOdE8M-1713715188-1.0.1.1-ivorXIVLvQTdI5cP6XAOJlRJocGpdDRzg87IBlIT_7OXm1TKu8_I0srdyJT3JIKtWb4uZpben2OJSTdejNfeNQ"
+        },
+        "ent": "eyJraWQiOiJrMSIsImFsZyI6IlJTMjU2In0.eyJlbnRpdGxlbWVudHMiOltdLCJhdF9oYXNoIjoieW0wamhBdnZuMzlmNWd0NG9wYmhvUSIsInN1YiI6ImQ5MWIzY2UwLWFiZTUtNWExOC05MzNjLTkyMDQ0MzZkNThjZCIsImlzcyI6Imh0dHBzOlwvXC9lbnRpdGxlbWVudHMuYXV0aC5yaW90Z2FtZXMuY29tIiwiaWF0IjoxNzExNTYzNDA4LCJqdGkiOiJOWE9EcjNuVml4MCJ9.PXXOr3dVZwwwAsK4nspXmXFKrzKY5kk63p0teHu-HKOFEysHpVsO9FtcDUez4jZssgiaNWAUuy8Jsajtm-xhf_uYctXuIZ5NQM9zBU3A7pRtt0MQ97ZNfc33gVIELw8BDdoUDewpgFCV7zKwlmLY640yioqHKihuwuAoonLa74pPvnJmVvuvXaATk5OVs97-dUllfVbiS8AfBhdW-SfQcYX-gVCx-QsKSLdzpV5CsBj6uqRJ9cHKcKcwBtD64gr4a2aBbJrupsuasJ5WFcAJ1u8dBuX69KyA81KKFXTIa3meh3lgQCv-4tVHGhKZAmzTzJOEr7j2E5zHfWP1xa6Xdg"
+      },
+      "alerts": [],
+      "username": "ImSchdiefToo#0418",
+      "region": "eu",
+      "authFailures": 0,
+      "lastFetchedData": 1711563408429,
+      "lastNoticeSeen": "",
+      "lastSawEasterEgg": 1711976446123
+    }
+  ],
+  "currentAccount": 1,
+  "settings": {
+    "dailyShop": false,
+    "hideIgn": false,
+    "othersCanViewShop": false,
+    "othersCanViewColl": false,
+    "locale": "en-GB",
+    "localeForced": true,
+    "pingOnAutoDailyShop": true,
+    "othersCanViewProfile": false,
+    "othersCanUseAccountButtons": true
+  }
+}

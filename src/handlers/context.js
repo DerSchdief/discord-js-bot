@@ -9,6 +9,16 @@ module.exports = {
    * @param {import("@structures/BaseContext")} context
    */
   handleContext: async function (interaction, context) {
+
+    if (interaction.client.config.BOT_SETTINGS.MAINTENANCEMODE) {
+      if (!interaction.client.config.OWNER_IDS.some(owner => owner.id === interaction.user.id)) {
+        return interaction.reply({
+          content: `Aktuell laufen Wartungsarbeiten, daher stehen alle Funktionen nur den Bot-Ownern zur Verfügung`,
+          ephemeral: true,
+        });
+      }
+    }
+
     // check cooldown
     if (context.cooldown) {
       const remaining = getRemainingCooldown(interaction.user.id, context);

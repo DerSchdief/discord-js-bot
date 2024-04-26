@@ -7,7 +7,6 @@ const {
   StringSelectMenuBuilder,
   ComponentType,
 } = require("discord.js");
-const { TICKET } = require("@root/config.js");
 
 // schemas
 const { getSettings } = require("@schemas/Guild");
@@ -63,8 +62,9 @@ async function parseTicketDetails(channel) {
  * @param {import('discord.js').BaseGuildTextChannel} channel
  * @param {import('discord.js').User} closedBy
  * @param {string} [reason]
+ * @param {import("discord.js").ButtonInteraction} interaction
  */
-async function closeTicket(channel, closedBy, reason) {
+async function closeTicket(channel, closedBy, reason, interaction) {
   if (!channel.deletable || !channel.permissionsFor(channel.guild.members.me).has(CLOSE_PERMS)) {
     return "MISSING_PERMISSIONS";
   }
@@ -96,7 +96,7 @@ async function closeTicket(channel, closedBy, reason) {
 
     if (channel.deletable) await channel.delete();
 
-    const embed = new EmbedBuilder().setAuthor({ name: "Ticket Closed" }).setColor(TICKET.CLOSE_EMBED);
+    const embed = new EmbedBuilder().setAuthor({ name: "Ticket Closed" }).setColor(interaction.client.config.TICKET.CLOSE_EMBED);
     const fields = [];
 
     if (reason) fields.push({ name: "Reason", value: reason, inline: false });
@@ -139,14 +139,15 @@ async function closeTicket(channel, closedBy, reason) {
 /**
  * @param {import('discord.js').Guild} guild
  * @param {import('discord.js').User} author
+ * @param {import("discord.js").ButtonInteraction} interaction
  */
-async function closeAllTickets(guild, author) {
+async function closeAllTickets(guild, author, interaction) {
   const channels = getTicketChannels(guild);
   let success = 0;
   let failed = 0;
 
   for (const ch of channels) {
-    const status = await closeTicket(ch[1], author, "Force close all open tickets");
+    const status = await closeTicket(ch[1], author, "Force close all open tickets", interaction);
     if (status === "SUCCESS") success += 1;
     else failed += 1;
   }
@@ -261,7 +262,7 @@ async function handleTicketOpen(interaction) {
     const sent = await tktChannel.send({ content: user.toString(), embeds: [embed], components: [buttonsRow] });
 
     const dmEmbed = new EmbedBuilder()
-      .setColor(TICKET.CREATE_EMBED)
+      .setColor(interaction.client.config.TICKET.CREATE_EMBED)
       .setAuthor({ name: "Ticket Created" })
       .setThumbnail(guild.iconURL())
       .setDescription(
@@ -288,7 +289,7 @@ async function handleTicketOpen(interaction) {
  */
 async function handleTicketClose(interaction) {
   await interaction.deferReply({ ephemeral: true });
-  const status = await closeTicket(interaction.channel, interaction.user);
+  const status = await closeTicket(interaction.channel, interaction.user, '',interaction);
   if (status === "MISSING_PERMISSIONS") {
     return interaction.followUp("Cannot close the ticket, missing permissions. Contact server manager for help!");
   } else if (status == "ERROR") {

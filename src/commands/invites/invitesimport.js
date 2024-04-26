@@ -11,7 +11,7 @@ module.exports = {
   botPermissions: ["ManageGuild"],
   userPermissions: ["ManageGuild"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "[@member]",
   },
   slashCommand: {

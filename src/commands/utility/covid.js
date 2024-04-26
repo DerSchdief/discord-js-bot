@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { MESSAGES, EMBED_COLORS } = require("@root/config.js");
 const { getJson } = require("@helpers/HttpUtils");
 const timestampToDate = require("timestamp-to-date");
 
@@ -13,7 +12,7 @@ module.exports = {
   category: "UTILITY",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "<country>",
     minArgsCount: 1,
   },
@@ -37,23 +36,23 @@ module.exports = {
 
   async interactionRun(interaction) {
     const country = interaction.options.getString("country");
-    const response = await getCovid(country);
+    const response = await getCovid(country, interaction);
     await interaction.followUp(response);
   },
 };
 
-async function getCovid(country) {
+async function getCovid(country, { client }) {
   const response = await getJson(`https://disease.sh/v2/countries/${country}`);
 
   if (response.status === 404) return "```css\nCountry with the provided name is not found```";
-  if (!response.success) return MESSAGES.API_ERROR;
+  if (!response.success) return client.config.MESSAGES.API_ERROR;
   const { data } = response;
 
   const mg = timestampToDate(data?.updated, "dd.MM.yyyy at HH:mm");
   const embed = new EmbedBuilder()
     .setTitle(`Covid - ${data?.country}`)
     .setThumbnail(data?.countryInfo.flag)
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .addFields(
       {
         name: "Cases Total",

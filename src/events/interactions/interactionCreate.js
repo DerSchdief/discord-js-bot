@@ -1,5 +1,9 @@
 const { getSettings } = require("@schemas/Guild");
-const { commandHandler, contextHandler, statsHandler, suggestionHandler, ticketHandler } = require("@src/handlers");
+const { 
+  commandHandler, contextHandler, statsHandler, suggestionHandler, 
+  ticketHandler, buttonHandler,autocompleteHandler, selectMenuHandler,
+  modalHandler
+} = require("@src/handlers");
 const { InteractionType } = require("discord.js");
 
 /**
@@ -15,7 +19,7 @@ module.exports = async (client, interaction) => {
 
   // Slash Commands
   if (interaction.isChatInputCommand()) {
-    await commandHandler.handleSlashCommand(interaction);
+    await commandHandler.handleSlashCommand(interaction, client);
   }
 
   // Context Menu
@@ -25,38 +29,52 @@ module.exports = async (client, interaction) => {
     else return interaction.reply({ content: "An error has occurred", ephemeral: true }).catch(() => {});
   }
 
+  else if (interaction.isAutocomplete()){
+    await autocompleteHandler.handleAutocomplete(interaction);
+  }
+
+  else if (interaction.isStringSelectMenu()) {
+    // const selectMenu = client.selectMenus.get(interaction.customId);
+    await selectMenuHandler.handleSelectMenu(interaction)
+  }
+
   // Buttons
   else if (interaction.isButton()) {
-    switch (interaction.customId) {
-      case "TICKET_CREATE":
-        return ticketHandler.handleTicketOpen(interaction);
+    await buttonHandler.handleButton(interaction);
 
-      case "TICKET_CLOSE":
-        return ticketHandler.handleTicketClose(interaction);
+    // switch (interaction.customId) {
+    //   case "TICKET_CREATE":
+    //     return ticketHandler.handleTicketOpen(interaction);
 
-      case "SUGGEST_APPROVE":
-        return suggestionHandler.handleApproveBtn(interaction);
+    //   case "TICKET_CLOSE":
+    //     return ticketHandler.handleTicketClose(interaction);
 
-      case "SUGGEST_REJECT":
-        return suggestionHandler.handleRejectBtn(interaction);
+    //   case "SUGGEST_APPROVE":
+    //     return suggestionHandler.handleApproveBtn(interaction);
 
-      case "SUGGEST_DELETE":
-        return suggestionHandler.handleDeleteBtn(interaction);
-    }
+    //   case "SUGGEST_REJECT":
+    //     return suggestionHandler.handleRejectBtn(interaction);
+
+    //   case "SUGGEST_DELETE":
+    //     return suggestionHandler.handleDeleteBtn(interaction);
+    // }
   }
 
   // Modals
   else if (interaction.type === InteractionType.ModalSubmit) {
-    switch (interaction.customId) {
-      case "SUGGEST_APPROVE_MODAL":
-        return suggestionHandler.handleApproveModal(interaction);
+    await modalHandler.handleModal(interaction);
+    // switch (interaction.customId) {
+    //   case "SUGGEST_APPROVE_MODAL":
+    //     return suggestionHandler.handleApproveModal(interaction);
 
-      case "SUGGEST_REJECT_MODAL":
-        return suggestionHandler.handleRejectModal(interaction);
+    //   case "SUGGEST_REJECT_MODAL":
+    //     return suggestionHandler.handleRejectModal(interaction);
 
-      case "SUGGEST_DELETE_MODAL":
-        return suggestionHandler.handleDeleteModal(interaction);
-    }
+    //   case "SUGGEST_DELETE_MODAL":
+    //     return suggestionHandler.handleDeleteModal(interaction);
+    //   case "playModal":
+        
+    // }
   }
 
   const settings = await getSettings(interaction.guild);

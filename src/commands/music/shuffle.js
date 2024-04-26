@@ -9,10 +9,10 @@ module.exports = {
   category: "MUSIC",
   validations: musicValidations,
   command: {
-    enabled: true,
+    enabled: false,
   },
   slashCommand: {
-    enabled: true,
+    enabled: false,
   },
 
   async messageRun(message, args) {

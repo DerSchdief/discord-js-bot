@@ -18,12 +18,12 @@ module.exports = {
   category: "MUSIC",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "<song-name>",
     minArgsCount: 1,
   },
   slashCommand: {
-    enabled: true,
+    enabled: false,
     options: [
       {
         name: "query",
@@ -52,7 +52,18 @@ module.exports = {
  * @param {string} query
  */
 async function play({ member, guild, channel }, query) {
-  if (!member.voice.channel) return "🚫 You need to join a voice channel first";
+  if (!member.voice.channel) {
+    const embedJoinFirst = new EmbedBuilder()
+      .setColor(client.config.EMBED_COLORS.ERROR)
+      .setAuthor({name: "Error"})
+      .setDescription("🚫 You need to join a voice channel first")
+    return { embeds: [embedJoinFirst] };
+  }
+
+  const embedDefaultCaseError = new EmbedBuilder()
+    .setColor(client.config.EMBED_COLORS.ERROR)
+    .setAuthor({name: "Error"})
+    .setDescription("🚫 An error occurred while searching for the song")
 
   let player = guild.client.musicManager.getPlayer(guild.id);
   if (player && !guild.members.me.voice.channel) {
@@ -61,17 +72,25 @@ async function play({ member, guild, channel }, query) {
   }
 
   if (player && member.voice.channel !== guild.members.me.voice.channel) {
-    return "🚫 You must be in the same voice channel as mine";
+    const embedSameVcAsMe = new EmbedBuilder()
+      .setColor(client.config.EMBED_COLORS.ERROR)
+      .setAuthor({name: "Error"})
+      .setDescription("🚫 You must be in the same voice channel as mine")
+    return { embeds: [embedSameVcAsMe] };
   }
 
-  let embed = new EmbedBuilder().setColor(EMBED_COLORS.BOT_EMBED);
+  let embed = new EmbedBuilder().setColor(client.config.EMBED_COLORS.BOT_EMBED);
   let tracks;
   let description = "";
 
   try {
     if (guild.client.musicManager.spotify.isSpotifyUrl(query)) {
-      if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_CLIENT_SECRET) {
-        return "🚫 Spotify songs cannot be played. Please contact the bot owner";
+      if (!MUSIC.SPOTIFY_CLIENT_ID || !MUSIC.SPOTIFY_CLIENT_SECRET) {
+        const embedErrorNoSpotify = new EmbedBuilder()
+          .setColor(client.config.EMBED_COLORS.ERROR)
+          .setAuthor({name: "Error"})
+          .setDescription("🚫 Spotify songs cannot be played. Please contact the bot owner")
+        return { embeds: [embedErrorNoSpotify] };
       }
 
       const item = await guild.client.musicManager.spotify.load(query);
@@ -99,7 +118,7 @@ async function play({ member, guild, channel }, query) {
           break;
 
         default:
-          return "🚫 An error occurred while searching for the song";
+          return { embeds: [embedDefaultCaseError] };
       }
 
       if (!tracks) guild.client.logger.debug({ query, item });
@@ -110,10 +129,18 @@ async function play({ member, guild, channel }, query) {
       switch (res.loadType) {
         case "LOAD_FAILED":
           guild.client.logger.error("Search Exception", res.exception);
-          return "🚫 There was an error while searching";
+          const embedSearchError = new EmbedBuilder()
+            .setColor(client.config.EMBED_COLORS.ERROR)
+            .setAuthor({name: "Error"})
+            .setDescription("🚫 There was an error while searching")
+          return { embeds: [embedSearchError] };
 
         case "NO_MATCHES":
-          return `No results found matching ${query}`;
+          const embedNoResultsError = new EmbedBuilder()
+            .setColor(client.config.EMBED_COLORS.ERROR)
+            .setAuthor({name: "Error"})
+            .setDescription(`No results found matching ${query}`)
+          return { embeds: [embedNoResultsError] };
 
         case "PLAYLIST_LOADED":
           tracks = res.tracks;
@@ -129,14 +156,14 @@ async function play({ member, guild, channel }, query) {
 
         default:
           guild.client.logger.debug("Unknown loadType", res);
-          return "🚫 An error occurred while searching for the song";
+          return { embeds: [embedDefaultCaseError] };
       }
 
       if (!tracks) guild.client.logger.debug({ query, res });
     }
   } catch (error) {
-    guild.client.logger.error("Search Exception", typeof error === "object" ? JSON.stringify(error) : error);
-    return "🚫 An error occurred while searching for the song";
+      guild.client.logger.error("Search Exception", error);
+      return { embeds: [embedDefaultCaseError] };
   }
 
   if (!tracks) return "🚫 An error occurred while searching for the song";
@@ -150,7 +177,7 @@ async function play({ member, guild, channel }, query) {
       embed
         .setAuthor({ name: "Added Track to queue" })
         .setDescription(`[${track.info.title}](${track.info.uri})`)
-        .setFooter({ text: `Requested By: ${member.user.username}` });
+        .setFooter({ text: `Requested By: ${member.user.tag}` });
 
       fields.push({
         name: "Song Duration",
@@ -189,7 +216,7 @@ async function play({ member, guild, channel }, query) {
           inline: true,
         }
       )
-      .setFooter({ text: `Requested By: ${member.user.username}` });
+      .setFooter({ text: `Requested By: ${member.user.tag}` });
   }
 
   // create a player and/or join the member's vc
@@ -201,7 +228,7 @@ async function play({ member, guild, channel }, query) {
 
   // do queue things
   const started = player.playing || player.paused;
-  player.queue.add(tracks, { requester: member.user.username, next: false });
+  player.queue.add(tracks, { requester: member.user.tag, next: false });
   if (!started) {
     await player.queue.start();
   }

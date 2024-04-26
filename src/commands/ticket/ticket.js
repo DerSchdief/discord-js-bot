@@ -10,7 +10,6 @@ const {
   TextInputStyle,
   ComponentType,
 } = require("discord.js");
-const { EMBED_COLORS } = require("@root/config.js");
 const { isTicketChannel, closeTicket, closeAllTickets } = require("@handlers/ticket");
 
 /**
@@ -270,7 +269,7 @@ module.exports = {
  * @param {import('discord.js').GuildTextBasedChannel} targetChannel
  * @param {object} settings
  */
-async function ticketModalSetup({ guild, channel, member }, targetChannel, settings) {
+async function ticketModalSetup({ client, guild, channel, member }, targetChannel, settings) {
   const buttonRow = new ActionRowBuilder().addComponents(
     new ButtonBuilder().setCustomId("ticket_btnSetup").setLabel("Setup Message").setStyle(ButtonStyle.Primary)
   );
@@ -340,7 +339,7 @@ async function ticketModalSetup({ guild, channel, member }, targetChannel, setti
 
   // send ticket message
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: title || "Support Ticket" })
     .setDescription(description || "Please use the button below to create a ticket")
     .setFooter({ text: footer || "You can only have 1 open ticket at a time!" });

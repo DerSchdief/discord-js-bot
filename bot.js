@@ -10,6 +10,8 @@ const { checkForUpdates } = require("@helpers/BotUtils");
 const { initializeMongoose } = require("@src/database/mongoose");
 const { BotClient } = require("@src/structures");
 const { validateConfiguration } = require("@helpers/Validator");
+const { saveClient } = require("@helpers/Valorant");
+const lavaclientEventsHandler = require("@handlers/lavaclientEvents");
 
 validateConfiguration();
 
@@ -18,9 +20,16 @@ const client = new BotClient();
 client.loadCommands("src/commands");
 client.loadContexts("src/contexts");
 client.loadEvents("src/events");
+client.loadButtons("src/buttons");
+client.loadSelectMenus("src/selectMenus");
+client.loadModals("src/modals");
+
+// lavaclientEventsHandler(client);
 
 // find unhandled promise rejections
 process.on("unhandledRejection", (err) => client.logger.error(`Unhandled exception`, err));
+
+
 
 (async () => {
   // check for updates
@@ -42,6 +51,9 @@ process.on("unhandledRejection", (err) => client.logger.error(`Unhandled excepti
     await initializeMongoose();
   }
 
+  
+
   // start the client
-  await client.login(process.env.BOT_TOKEN);
+  await client.login(client.config.BOT_SETTINGS.BOT_TOKEN);
+  await saveClient(client);
 })();

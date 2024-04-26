@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { EMBED_COLORS } = require("@root/config.js");
 
 /**
  * @type {import("@structures/Command")}
@@ -14,7 +13,7 @@ module.exports = {
     usage: "[@member|id]",
   },
   slashCommand: {
-    enabled: true,
+    enabled: false,
     options: [
       {
         name: "user",
@@ -38,7 +37,7 @@ module.exports = {
   },
 };
 
-async function getInviteCodes({ guild }, user) {
+async function getInviteCodes({ client, guild }, user) {
   const invites = await guild.invites.fetch({ cache: false });
   const reqInvites = invites.filter((inv) => inv.inviter.id === user.id);
   if (reqInvites.size === 0) return `\`${user.username}\` has no invites in this server`;
@@ -50,7 +49,7 @@ async function getInviteCodes({ guild }, user) {
 
   const embed = new EmbedBuilder()
     .setAuthor({ name: `Invite code for ${user.username}` })
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setDescription(str);
 
   return { embeds: [embed] };

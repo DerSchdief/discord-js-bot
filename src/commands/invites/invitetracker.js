@@ -10,7 +10,7 @@ module.exports = {
   category: "INVITE",
   userPermissions: ["ManageGuild"],
   command: {
-    enabled: true,
+    enabled: false,
     aliases: ["invitetracking"],
     usage: "<ON|OFF>",
     minArgsCount: 1,

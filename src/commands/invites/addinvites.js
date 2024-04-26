@@ -1,5 +1,4 @@
 const { getEffectiveInvites, checkInviteRewards } = require("@handlers/invite");
-const { EMBED_COLORS } = require("@root/config.js");
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
 const { getMember } = require("@schemas/Member");
 
@@ -13,7 +12,7 @@ module.exports = {
   userPermissions: ["ManageGuild"],
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "<@member|id> <invites>",
     minArgsCount: 2,
   },
@@ -54,7 +53,7 @@ module.exports = {
   },
 };
 
-async function addInvites({ guild }, user, amount) {
+async function addInvites({ client, guild }, user, amount) {
   if (user.bot) return "Oops! You cannot add invites to bots";
 
   const memberDb = await getMember(guild.id, user.id);
@@ -64,7 +63,7 @@ async function addInvites({ guild }, user, amount) {
   const embed = new EmbedBuilder()
     .setAuthor({ name: `Added invites to ${user.username}` })
     .setThumbnail(user.displayAvatarURL())
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setDescription(`${user.username} now has ${getEffectiveInvites(memberDb.invite_data)} invites`);
 
   checkInviteRewards(guild, memberDb, true);

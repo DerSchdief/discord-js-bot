@@ -17,12 +17,12 @@ module.exports = {
   category: "MUSIC",
   validations: musicValidations,
   command: {
-    enabled: true,
+    enabled: false,
     minArgsCount: 1,
     usage: "<none|low|medium|high>",
   },
   slashCommand: {
-    enabled: true,
+    enabled: false,
     options: [
       {
         name: "level",

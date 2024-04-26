@@ -12,17 +12,17 @@ module.exports = async (user) => {
     .addFields(
       {
         name: "Wallet",
-        value: `${economy?.coins || 0}${ECONOMY.CURRENCY}`,
+        value: `${economy?.coins || 0}${client.config.ECONOMY.CURRENCY}`,
         inline: true,
       },
       {
         name: "Bank",
-        value: `${economy?.bank || 0}${ECONOMY.CURRENCY}`,
+        value: `${economy?.bank || 0}${client.config.ECONOMY.CURRENCY}`,
         inline: true,
       },
       {
         name: "Net Worth",
-        value: `${(economy?.coins || 0) + (economy?.bank || 0)}${ECONOMY.CURRENCY}`,
+        value: `${(economy?.coins || 0) + (economy?.bank || 0)}${client.config.ECONOMY.CURRENCY}`,
         inline: true,
       }
     );

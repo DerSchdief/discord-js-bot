@@ -113,7 +113,7 @@ async function viewReputation(target) {
 
   const embed = new EmbedBuilder()
     .setAuthor({ name: `Reputation for ${target.username}` })
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setThumbnail(target.displayAvatarURL())
     .addFields(
       {
@@ -155,7 +155,7 @@ async function giveReputation(user, target) {
   await targetData.save();
 
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setDescription(`${target.toString()} +1 Rep!`)
     .setFooter({ text: `By ${user.username}` })
     .setTimestamp(Date.now());

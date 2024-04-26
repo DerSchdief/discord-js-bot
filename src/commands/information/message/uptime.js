@@ -9,7 +9,7 @@ module.exports = {
   category: "INFORMATION",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
   },
 
   async messageRun(message, args) {

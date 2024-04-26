@@ -1,5 +1,4 @@
 const { getEffectiveInvites } = require("@handlers/invite");
-const { EMBED_COLORS } = require("@root/config.js");
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
 const { stripIndent } = require("common-tags");
 const { getMember } = require("@schemas/Member");
@@ -13,7 +12,7 @@ module.exports = {
   category: "INVITE",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "[@member|id]",
   },
   slashCommand: {
@@ -41,7 +40,7 @@ module.exports = {
   },
 };
 
-async function getInviter({ guild }, user, settings) {
+async function getInviter({ client, guild }, user, settings) {
   if (!settings.invite.tracking) return `Invite tracking is disabled in this server`;
 
   const inviteData = (await getMember(guild.id, user.id)).invite_data;
@@ -51,7 +50,7 @@ async function getInviter({ guild }, user, settings) {
   const inviterData = (await getMember(guild.id, inviteData.inviter)).invite_data;
 
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setAuthor({ name: `Invite data for ${user.username}` })
     .setDescription(
       stripIndent`

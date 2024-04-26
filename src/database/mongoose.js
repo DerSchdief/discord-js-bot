@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { log, success, error } = require("../helpers/Logger");
+const { BOT_SETTINGS } = require("@root/config");
 
 mongoose.set("strictQuery", true);
 
@@ -8,7 +9,7 @@ module.exports = {
     log(`Connecting to MongoDb...`);
 
     try {
-      await mongoose.connect(process.env.MONGO_CONNECTION);
+      await mongoose.connect(BOT_SETTINGS.MONGO_CONNECTION);
 
       success("Mongoose: Database connection established");
 

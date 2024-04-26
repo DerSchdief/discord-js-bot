@@ -10,7 +10,7 @@ module.exports = {
   category: "INVITE",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
   },
   slashCommand: {
     enabled: true,
@@ -42,7 +42,7 @@ async function getInviteRanks({ guild }, settings) {
 
   const embed = new EmbedBuilder()
     .setAuthor({ name: "Invite Ranks" })
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setDescription(str);
   return { embeds: [embed] };
 }

@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { MESSAGES, EMBED_COLORS } = require("@root/config.js");
 const { getJson } = require("@helpers/HttpUtils");
 
 const API_KEY = process.env.WEATHERSTACK_KEY;
@@ -14,7 +13,7 @@ module.exports = {
   category: "UTILITY",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "<place>",
     minArgsCount: 1,
   },
@@ -38,21 +37,21 @@ module.exports = {
 
   async interactionRun(interaction) {
     const place = interaction.options.getString("place");
-    const response = await weather(place);
+    const response = await weather(place, interaction);
     await interaction.followUp(response);
   },
 };
 
-async function weather(place) {
+async function weather(place, { client }) {
   const response = await getJson(`http://api.weatherstack.com/current?access_key=${API_KEY}&query=${place}`);
-  if (!response.success) return MESSAGES.API_ERROR;
+  if (!response.success) return client.config.MESSAGES.API_ERROR;
 
   const json = response.data;
   if (!json.request) return `No city found matching \`${place}\``;
 
   const embed = new EmbedBuilder()
     .setTitle("Weather")
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setThumbnail(json.current?.weather_icons[0])
     .addFields(
       { name: "City", value: json.location?.name || "NA", inline: true },

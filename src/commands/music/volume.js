@@ -10,11 +10,11 @@ module.exports = {
   category: "MUSIC",
   validations: musicValidations,
   command: {
-    enabled: true,
+    enabled: false,
     usage: "<1-100>",
   },
   slashCommand: {
-    enabled: true,
+    enabled: false,
     options: [
       {
         name: "amount",

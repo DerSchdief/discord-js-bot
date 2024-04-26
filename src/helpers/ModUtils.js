@@ -179,11 +179,13 @@ module.exports = class ModUtils {
 
     try {
       const messages = await channel.messages.fetch({ limit: amount, cache: false, force: true });
+      console.log(messages);
+      // const messages = await channel.messages.fetch({ limit: amount, cache: false, force: true });
 
       for (const message of messages.values()) {
         if (toDelete.size >= amount) break;
         if (!message.deletable) continue;
-        if (message.createdTimestamp < Date.now() - 1209600000) continue; // skip messages older than 14 days
+        //if (message.createdTimestamp < Date.now() - 1209600000) continue; // skip messages older than 14 days
 
         if (type === "ALL") {
           toDelete.set(message.id, message);

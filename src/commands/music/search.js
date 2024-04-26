@@ -23,12 +23,12 @@ module.exports = {
   category: "MUSIC",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "<song-name>",
     minArgsCount: 1,
   },
   slashCommand: {
-    enabled: true,
+    enabled: false,
     options: [
       {
         name: "query",
@@ -78,11 +78,10 @@ async function search({ member, guild, channel }, query) {
     return "🚫 There was an error while searching";
   }
 
-  let embed = new EmbedBuilder().setColor(EMBED_COLORS.BOT_EMBED);
+  let embed = new EmbedBuilder().setColor(client.config.EMBED_COLORS.BOT_EMBED);
   let tracks;
 
-  const loadType = res.tracks.length > 0 ? res.loadType : "NO_MATCHES";
-  switch (loadType) {
+  switch (res.loadType) {
     case "LOAD_FAILED":
       guild.client.logger.error("Search Exception", res.exception);
       return "🚫 There was an error while searching";
@@ -102,7 +101,7 @@ async function search({ member, guild, channel }, query) {
       embed
         .setAuthor({ name: "Added Song to queue" })
         .setDescription(`[${track.info.title}](${track.info.uri})`)
-        .setFooter({ text: `Requested By: ${member.user.username}` });
+        .setFooter({ text: `Requested By: ${member.user.tag}` });
 
       fields.push({
         name: "Song Duration",
@@ -145,7 +144,7 @@ async function search({ member, guild, channel }, query) {
             inline: true,
           }
         )
-        .setFooter({ text: `Requested By: ${member.user.username}` });
+        .setFooter({ text: `Requested By: ${member.user.tag}` });
       break;
 
     case "SEARCH_RESULT": {
@@ -167,7 +166,7 @@ async function search({ member, guild, channel }, query) {
       );
 
       const tempEmbed = new EmbedBuilder()
-        .setColor(EMBED_COLORS.BOT_EMBED)
+        .setColor(client.config.EMBED_COLORS.BOT_EMBED)
         .setAuthor({ name: "Search Results" })
         .setDescription(`Please select the songs you wish to add to queue`);
 
@@ -198,7 +197,7 @@ async function search({ member, guild, channel }, query) {
           tracks = toAdd;
           embed
             .setDescription(`🎶 Added ${toAdd.length} songs to queue`)
-            .setFooter({ text: `Requested By: ${member.user.username}` });
+            .setFooter({ text: `Requested By: ${member.user.tag}` });
         }
       } catch (err) {
         console.log(err);
@@ -217,7 +216,7 @@ async function search({ member, guild, channel }, query) {
 
   // do queue things
   const started = player.playing || player.paused;
-  player.queue.add(tracks, { requester: member.user.username, next: false });
+  player.queue.add(tracks, { requester: member.user.tag, next: false });
   if (!started) {
     await player.queue.start();
   }

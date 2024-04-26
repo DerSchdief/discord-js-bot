@@ -10,9 +10,9 @@ const path = require("path");
 const { table } = require("table");
 const Logger = require("../helpers/Logger");
 const { recursiveReadDirSync } = require("../helpers/Utils");
-const { validateCommand, validateContext } = require("../helpers/Validator");
+const { validateCommand, validateContext, validateButton, validateSelectMenu, validateModal } = require("../helpers/Validator");
 const { schemas } = require("@src/database/mongoose");
-const CommandCategory = require("./CommandCategory");
+// const CommandCategory = require("./CommandCategory");
 const lavaclient = require("../handlers/lavaclient");
 const giveawaysHandler = require("../handlers/giveaway");
 const { DiscordTogether } = require("discord-together");
@@ -37,8 +37,13 @@ module.exports = class BotClient extends Client {
       restRequestTimeout: 20000,
     });
 
+    // Logger
+    this.logger = Logger;
+
     this.wait = require("util").promisify(setTimeout); // await client.wait(1000) - Wait 1 second
-    this.config = require("@root/config"); // load the config file
+
+    this.config = '';
+    this.loadConfig("/src/config");
 
     /**
      * @type {import('@structures/Command')[]}
@@ -55,6 +60,22 @@ module.exports = class BotClient extends Client {
      * @type {Collection<string, import('@structures/BaseContext')>}
      */
     this.contextMenus = new Collection(); // store contextMenus
+
+    /**
+     * @type {Collection<string, import('@structures/BaseButton')>}
+     */
+    this.buttons = new Collection();
+    
+    /**
+     * @type {Collection<string, import('@structures/BaseSelectMenu')>}
+     */
+    this.selectMenus  = new Collection();
+  
+    /**
+     * @type {Collection<string, import('@structures/BaseModal')>}
+     */
+    this.modals = new Collection();
+
     this.counterUpdateQueue = []; // store guildId's that needs counter update
 
     // initialize webhook for sending guild join/leave details
@@ -63,13 +84,10 @@ module.exports = class BotClient extends Client {
       : undefined;
 
     // Music Player
-    if (this.config.MUSIC.ENABLED) this.musicManager = lavaclient(this);
+    if (this.config.MUSIC.ENABLED) this.lavalink = lavaclient(this);
 
     // Giveaways
     if (this.config.GIVEAWAYS.ENABLED) this.giveawaysManager = giveawaysHandler(this);
-
-    // Logger
-    this.logger = Logger;
 
     // Database
     this.database = schemas;
@@ -135,7 +153,7 @@ module.exports = class BotClient extends Client {
    */
   loadCommand(cmd) {
     // Check if category is disabled
-    if (cmd.category && CommandCategory[cmd.category]?.enabled === false) {
+    if (cmd.category && this.config[cmd.category]?.ENABLED === false) {
       this.logger.debug(`Skipping Command ${cmd.name}. Category ${cmd.category} is disabled`);
       return;
     }
@@ -167,12 +185,43 @@ module.exports = class BotClient extends Client {
   }
 
   /**
+   * Load files and clear require cache for a reload command
+   * @param {string} directory
+   */
+  loadFiles(directory) {
+    const files = recursiveReadDirSync(directory);
+    files.forEach((file) => delete require.cache[require.resolve(file)]);
+
+    return files;
+  }
+
+  /**
+   * Load files and clear require cache for a reload command
+   * @param {string} directory
+   */
+  loadConfig(directory) {
+    this.logger.log(`Loading config...`);
+    const files = this.loadFiles(directory);
+
+    for (const file of files) {
+      try {
+        const cfg = require(file);
+        this.config = cfg;
+      } catch (ex) {
+        this.logger.error(`Failed to load ${file} Reason: ${ex.message}`);
+      }
+    }
+    return files;
+  }
+
+  /**
    * Load all commands from the specified directory
    * @param {string} directory
    */
   loadCommands(directory) {
     this.logger.log(`Loading commands...`);
-    const files = recursiveReadDirSync(directory);
+    this.slashCommands.clear();
+    const files = this.loadFiles(directory);
     for (const file of files) {
       try {
         const cmd = require(file);
@@ -190,6 +239,108 @@ module.exports = class BotClient extends Client {
   }
 
   /**
+   * Load all SelectMenu from the specified directory
+   * @param {string} directory
+   */
+  loadSelectMenus(directory) {
+    this.logger.log(`Loading SelectMenu...`);
+    const files = recursiveReadDirSync(directory);
+    for (const file of files) {
+      try {
+        const slm = require(file);
+        if (typeof slm !== "object") continue;
+        validateSelectMenu(slm);
+        if (slm.category && this.config[slm.category]?.ENABLED === false) {
+          this.logger.debug(`Skipping Command ${slm.id}. Category ${slm.category} is disabled`);
+          return;
+        }
+        if (!slm.enabled) return this.logger.debug(`Skipping SelectMenu ${slm.id}. Disabled!`);
+        if (this.selectMenus.has(slm.id)) throw new Error(`SelectMenu already exists with that name`);
+        this.selectMenus.set(slm.id, slm);
+      } catch (ex) {
+        this.logger.error(`Failed to load ${file} Reason: ${ex.message}`);
+      }
+    }
+
+    this.logger.success(`Loaded ${this.selectMenus.size} SelectMenu`);
+  }
+
+  /**
+   * Load all modals from the specified directory
+   * @param {string} directory
+   */
+  loadModals(directory) {
+    this.logger.log(`Loading Modals...`);
+    const files = recursiveReadDirSync(directory);
+    for (const file of files) {
+      try {
+        const mdl = require(file);
+        if (typeof mdl !== "object") continue;
+        validateModal(mdl);
+        if (mdl.category && this.config[mdl.category]?.ENABLED === false) {
+          this.logger.debug(`Skipping Command ${mdl.id}. Category ${mdl.category} is disabled`);
+          return;
+        }
+        if (!mdl.enabled) return this.logger.debug(`Skipping Modals ${mdl.id}. Disabled!`);
+        if (this.modals.has(mdl.id)) throw new Error(`Modals already exists with that name`);
+        this.modals.set(mdl.id, mdl);
+      } catch (ex) {
+        this.logger.error(`Failed to load ${file} Reason: ${ex.message}`);
+      }
+    }
+
+    this.logger.success(`Loaded ${this.modals.size} Modals`);
+  }
+
+  checkIfDisabled(structure, type) {
+    if (structure.category && this.config[structure.category]?.ENABLED === false) {
+      if (type === 'Context') {
+        this.logger.debug(`Skipping ${type} ${structure.name}. Category ${structure.category} is disabled`);
+      } else {
+        this.logger.debug(`Skipping ${type} ${structure.id}. Category ${structure.category} is disabled`);
+      }
+
+      return "category";
+    }
+
+    if (!structure.enabled) {
+      if (type === 'Context') {
+        this.logger.debug(`Skipping ${type} ${structure.name}. Category ${structure.category} is disabled`);
+      } else {
+        this.logger.debug(`Skipping ${type} ${structure.id}. Category ${structure.category} is disabled`);
+      }
+      return "disabled";
+    }
+
+    return "";
+  }
+
+  /**
+   * Load all buttons from the specified directory
+   * @param {string} directory
+   */
+  loadButtons(directory) {
+    this.logger.log(`Loading buttons...`);
+    const files = recursiveReadDirSync(directory);
+    for (const file of files) {
+      try {
+        const btn = require(file);
+        if (typeof btn !== "object") continue;
+        validateButton(btn);
+        const test = this.checkIfDisabled(btn, 'Button');
+        if (!test) {
+          if (this.buttons.has(btn.id)) throw new Error(`Button already exists with that name`);
+          this.buttons.set(btn.id, btn);
+        }
+      } catch (ex) {
+        this.logger.error(`Failed to load ${file} Reason: ${ex.message}`);
+      }
+    }
+
+    this.logger.success(`Loaded ${this.buttons.size} buttons`);
+  }
+
+  /**
    * Load all contexts from the specified directory
    * @param {string} directory
    */
@@ -201,6 +352,10 @@ module.exports = class BotClient extends Client {
         const ctx = require(file);
         if (typeof ctx !== "object") continue;
         validateContext(ctx);
+        if (ctx.category && this.config[ctx.category]?.ENABLED === false) {
+          this.logger.debug(`Skipping Command ${ctx.id}. Category ${ctx.category} is disabled`);
+          return;
+        }
         if (!ctx.enabled) return this.logger.debug(`Skipping context ${ctx.name}. Disabled!`);
         if (this.contextMenus.has(ctx.name)) throw new Error(`Context already exists with that name`);
         this.contextMenus.set(ctx.name, ctx);
@@ -209,8 +364,8 @@ module.exports = class BotClient extends Client {
       }
     }
 
-    const userContexts = this.contextMenus.filter((ctx) => ctx.type === ApplicationCommandType.User).size;
-    const messageContexts = this.contextMenus.filter((ctx) => ctx.type === ApplicationCommandType.Message).size;
+    const userContexts = this.contextMenus.filter((ctx) => ctx.type === "USER").size;
+    const messageContexts = this.contextMenus.filter((ctx) => ctx.type === "MESSAGE").size;
 
     if (userContexts > 3) throw new Error("A maximum of 3 USER contexts can be enabled");
     if (messageContexts > 3) throw new Error("A maximum of 3 MESSAGE contexts can be enabled");

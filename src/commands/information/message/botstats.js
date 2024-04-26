@@ -10,7 +10,7 @@ module.exports = {
   botPermissions: ["EmbedLinks"],
   cooldown: 5,
   command: {
-    enabled: true,
+    enabled: false,
     aliases: ["botstat", "botinfo"],
   },
 

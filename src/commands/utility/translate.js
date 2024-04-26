@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { EMBED_COLORS } = require("@root/config.js");
 const { translate } = require("@helpers/HttpUtils");
 const { GOOGLE_TRANSLATE } = require("@src/data.json");
 
@@ -18,7 +17,7 @@ module.exports = {
   category: "UTILITY",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     aliases: ["tr"],
     usage: "<iso-code> <message>",
     minArgsCount: 2,
@@ -48,7 +47,7 @@ module.exports = {
 
     if (!GOOGLE_TRANSLATE[outputCode]) {
       embed
-        .setColor(EMBED_COLORS.WARNING)
+        .setColor(client.config.EMBED_COLORS.WARNING)
         .setDescription(
           "Invalid translation code. Visit [here](https://cloud.google.com/translate/docs/languages) to see list of supported translation codes"
         );
@@ -65,21 +64,21 @@ module.exports = {
   async interactionRun(interaction) {
     const outputCode = interaction.options.getString("language");
     const input = interaction.options.getString("text");
-    const response = await getTranslation(interaction.user, input, outputCode);
+    const response = await getTranslation(interaction, input, outputCode);
     await interaction.followUp(response);
   },
 };
 
-async function getTranslation(author, input, outputCode) {
+async function getTranslation({ client, user }, input, outputCode) {
   const data = await translate(input, outputCode);
   if (!data) return "Failed to translate your text";
 
   const embed = new EmbedBuilder()
     .setAuthor({
-      name: `${author.username} says`,
-      iconURL: author.avatarURL(),
+      name: `${user.username} says`,
+      iconURL: user.avatarURL(),
     })
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setDescription(data.output)
     .setFooter({ text: `${data.inputLang} (${data.inputCode}) ⟶ ${data.outputLang} (${data.outputCode})` });
 

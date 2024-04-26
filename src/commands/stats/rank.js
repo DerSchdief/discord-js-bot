@@ -58,7 +58,6 @@ async function getRank({ guild }, member, settings) {
   });
 
   const xpNeeded = memberStats.level * memberStats.level * 100;
-  const rank = pos !== -1 ? pos : 0;
 
   const url = new URL(`${IMAGE.BASE_API}/utils/rank-card`);
   url.searchParams.append("name", user.username);
@@ -69,7 +68,7 @@ async function getRank({ guild }, member, settings) {
   url.searchParams.append("level", memberStats.level);
   url.searchParams.append("barcolor", EMBED_COLORS.BOT_EMBED);
   url.searchParams.append("status", member?.presence?.status?.toString() || "idle");
-  url.searchParams.append("rank", rank);
+  if (pos !== -1) url.searchParams.append("rank", pos);
 
   const response = await getBuffer(url.href, {
     headers: {

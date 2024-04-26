@@ -1,5 +1,4 @@
 const { CommandCategory, BotClient } = require("@src/structures");
-const { EMBED_COLORS, SUPPORT_SERVER } = require("@root/config.js");
 const {
   EmbedBuilder,
   ActionRowBuilder,
@@ -24,7 +23,7 @@ module.exports = {
   category: "UTILITY",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "[command]",
   },
   slashCommand: {
@@ -115,14 +114,14 @@ async function getHelpMenu({ client, guild }) {
   let buttonsRow = new ActionRowBuilder().addComponents(components);
 
   const embed = new EmbedBuilder()
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setThumbnail(client.user.displayAvatarURL())
     .setDescription(
       "**About Me:**\n" +
         `Hello I am ${guild.members.me.displayName}!\n` +
         "A cool multipurpose discord bot which can serve all your needs\n\n" +
         `**Invite Me:** [Here](${client.getInvite()})\n` +
-        `**Support Server:** [Join](${SUPPORT_SERVER})`
+        `**Support Server:** [Join](${client.config.SUPPORT_SERVER})`
     );
 
   return {
@@ -220,7 +219,7 @@ function getSlashCategoryEmbeds(client, category) {
       "**Available Filters:**\n" + `${availableFilters}` + `*\n\n**Available Generators**\n` + `${availableGens}`;
 
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.BOT_EMBED)
+      .setColor(client.config.EMBED_COLORS.BOT_EMBED)
       .setThumbnail(CommandCategory[category]?.image)
       .setAuthor({ name: `${category} Commands` })
       .setDescription(collector);
@@ -233,7 +232,7 @@ function getSlashCategoryEmbeds(client, category) {
 
   if (commands.length === 0) {
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.BOT_EMBED)
+      .setColor(client.config.EMBED_COLORS.BOT_EMBED)
       .setThumbnail(CommandCategory[category]?.image)
       .setAuthor({ name: `${category} Commands` })
       .setDescription("No commands in this category");
@@ -261,7 +260,7 @@ function getSlashCategoryEmbeds(client, category) {
 
   arrSplitted.forEach((item, index) => {
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.BOT_EMBED)
+      .setColor(client.config.EMBED_COLORS.BOT_EMBED)
       .setThumbnail(CommandCategory[category]?.image)
       .setAuthor({ name: `${category} Commands` })
       .setDescription(item.join("\n"))
@@ -299,7 +298,7 @@ function getMsgCategoryEmbeds(client, category, prefix) {
       `**${prefix}cmd [attachment]:** Picks attachment image`;
 
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.BOT_EMBED)
+      .setColor(client.config.EMBED_COLORS.BOT_EMBED)
       .setThumbnail(CommandCategory[category]?.image)
       .setAuthor({ name: `${category} Commands` })
       .setDescription(collector);
@@ -312,7 +311,7 @@ function getMsgCategoryEmbeds(client, category, prefix) {
 
   if (commands.length === 0) {
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.BOT_EMBED)
+      .setColor(client.config.EMBED_COLORS.BOT_EMBED)
       .setThumbnail(CommandCategory[category]?.image)
       .setAuthor({ name: `${category} Commands` })
       .setDescription("No commands in this category");
@@ -331,7 +330,7 @@ function getMsgCategoryEmbeds(client, category, prefix) {
 
   arrSplitted.forEach((item, index) => {
     const embed = new EmbedBuilder()
-      .setColor(EMBED_COLORS.BOT_EMBED)
+      .setColor(client.config.EMBED_COLORS.BOT_EMBED)
       .setThumbnail(CommandCategory[category]?.image)
       .setAuthor({ name: `${category} Commands` })
       .setDescription(item.join("\n"))

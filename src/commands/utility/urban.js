@@ -1,5 +1,4 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js");
-const { MESSAGES, EMBED_COLORS } = require("@root/config.js");
 const { getJson } = require("@helpers/HttpUtils");
 const moment = require("moment");
 
@@ -13,7 +12,7 @@ module.exports = {
   category: "UTILITY",
   botPermissions: ["EmbedLinks"],
   command: {
-    enabled: true,
+    enabled: false,
     usage: "<word>",
     minArgsCount: 1,
   },
@@ -37,14 +36,14 @@ module.exports = {
 
   async interactionRun(interaction) {
     const word = interaction.options.getString("word");
-    const response = await urban(word);
+    const response = await urban(word, interaction);
     await interaction.followUp(response);
   },
 };
 
-async function urban(word) {
+async function urban(word, { client }) {
   const response = await getJson(`http://api.urbandictionary.com/v0/define?term=${word}`);
-  if (!response.success) return MESSAGES.API_ERROR;
+  if (!response.success) return client.config.MESSAGES.API_ERROR;
 
   const json = response.data;
   if (!json.list[0]) return `Nothing found matching \`${word}\``;
@@ -53,7 +52,7 @@ async function urban(word) {
   const embed = new EmbedBuilder()
     .setTitle(data.word)
     .setURL(data.permalink)
-    .setColor(EMBED_COLORS.BOT_EMBED)
+    .setColor(client.config.EMBED_COLORS.BOT_EMBED)
     .setDescription(`**Definition**\`\`\`css\n${data.definition}\`\`\``)
     .addFields(
       {
